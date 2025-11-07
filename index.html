@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glickmate</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+
+</head>
+<style>
+/* Daunevin 11-214, could change*/
+    * {
+        margin: 0;
+    }
+
+    .glicks {
+        width: 300px;
+        height: 200px;
+    
+    }
+
+    #row-1 {
+        display: flex;
+        flex-direction: row;
+        gap: 40px;
+        margin-bottom: 40px;
+    }
+
+    #row-2 {
+        display: flex;
+        flex-direction: row;
+        gap: 40px;
+    }
+
+    #body {
+        margin-left: 400px;
+        margin-right: 400px
+    }
+
+    #glick-1 {
+        border: 2px solid black;
+        text-align: center;
+        padding: 10px;
+        background-color: brown;
+        font-family: 'Montserrat', sans-serif;
+        color: yellow;
+    }
+
+    #glick-2 {
+        border: 2px solid black;
+        text-align: center;
+        padding: 10px;
+        background-color: brown;
+        font-family: 'Montserrat', sans-serif;
+        color: yellow;
+    }
+
+    #glick-3 {
+        border: 2px solid black;
+        text-align: center;
+        padding: 10px;
+        background-color: brown;
+        font-family: 'Montserrat', sans-serif;
+        color: yellow;
+    }
+
+    #glick-4 {
+        border: 2px solid black;
+        text-align: center;
+        padding: 10px;
+        background-color: brown;
+        font-family: 'Montserrat', sans-serif;
+        color: yellow;
+    }
+
+    #glick-5 {
+        border: 2px solid black;
+        text-align: center;
+        padding: 10px;
+        background-color: brown;
+        font-family: 'Montserrat', sans-serif;
+        color: yellow;
+    }
+
+    #glick-6 {
+        border: 2px solid black;
+        text-align: center;
+        padding: 10px;
+        background-color: brown;
+        font-family: 'Montserrat', sans-serif;
+        color: yellow;
+    }
+
+    #header-2 {
+        display: flex;
+        gap: 15px;
+        margin-top: 20px;
+        font-size: 20px;
+        color: yellow;
+    }
+
+    #header {
+        display: flex;
+        background-color: brown;
+        margin-bottom: 20px;
+        height: 75px;
+        gap: 1200px;
+    }
+
+    #header-1 {
+        margin-top: 20px;
+        margin-left: 5px;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 20px;
+    }
+
+    button {
+        background-color: yellow;
+        width: 125px;
+        height: 35px;
+        border-radius: 25px;
+    }
+
+    #logo {
+        display: flex;
+        width: 500px;
+        height: 500px;
+    }
+
+    #footer {
+        margin-top: 100px;
+        background-color: brown;
+        height: 90px;
+    }
+</style>
+<body>
+
+    <div id="header">
+        <div id="header-1">
+            <h2 style="color: yellow;">Glickmate</h2>
+            <img src="Images/tplogo.png">
+        </div>
+
+        <div id="header-2">
+            <p>Home</p>
+            <p>Cart</p>
+            <a href="signup/signup.html" style="color: yellow; text-decoration: none;">Login/Sign up</a>
+        </div>
+    </div>
+
+    <!-- <div id="logo">
+        <img src="Images/tplogo.png" alt="">
+    </div> -->
+
+    <div id="body">
+        <div id="row-1">
+            <div id="glick-1">
+                <img src="Images/plain.png" class="glicks">
+                <p>Plain</p>
+                <p>$5.00</p>
+                <button id="macros1" onclick="glick1Macros()">macros</button>
+                <button>Add To Cart</button>
+            </div>
+
+            <div id="glick-2">
+                <img src="Images/loaded.png" class="glicks">
+                <p>Loaded</p>
+                <p>$7.00</p>
+                <button id="macros2" onclick="glick2Macros()">macros</button>
+                <button>Add To Cart</button>
+            </div>
+
+            <div id="glick-3">
+                <img src="Images/cheese.png" class="glicks">
+                <p>Cheese</p>
+                <p>$6.00</p>
+                <button id="macros3" onclick="glick3Macros()">macros</button>
+                <button>Add To Cart</button>
+            </div>
+        </div>
+
+        <div id="row-2">
+            <div id="glick-4">
+                <img src="Images/nacho.png" class="glicks">
+                <p>Nacho</p>
+                <p>$7.00</p>
+                <button id="macros4" onclick="glick4Macros()">macros</button>
+                <button>Add To Cart</button>
+            </div>
+
+            <div id="glick-5">
+                <img src="Images/chili.png" class="glicks">
+                <p>Chili</p>
+                <p>$6.00</p>
+                <button id="macros5" onclick="glick5Macros()">macros</button>
+                <button>Add To Cart</button>
+            </div>
+
+            <div id="glick-6">
+                <img src="Images/chicago.png" class="glicks">
+                <p>Chicago</p>
+                <p>$7.00</p>
+                <button id="macros6" onclick="glick6Macros()">macros</button>
+                <button>Add To Cart</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer">
+        <p>Contact Us</p>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
