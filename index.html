@@ -24,18 +24,18 @@
         flex-direction: row;
         gap: 40px;
         margin-bottom: 40px;
+        justify-content: center;
+        align-items: center;
     }
 
     #row-2 {
         display: flex;
         flex-direction: row;
         gap: 40px;
+        justify-content: center;
+        align-items: center;
     }
 
-    #body {
-        margin-left: 400px;
-        margin-right: 400px
-    }
 
     #glick-1 {
         border: 2px solid black;
@@ -97,6 +97,8 @@
         margin-top: 20px;
         font-size: 20px;
         color: yellow;
+        font-family: 'Montserrat', sans-serif;
+
     }
 
     #header {
@@ -104,7 +106,8 @@
         background-color: brown;
         margin-bottom: 20px;
         height: 75px;
-        gap: 1200px;
+        justify-content: space-between;
+        padding: 0 20px;
     }
 
     #header-1 {
@@ -128,9 +131,24 @@
     }
 
     #footer {
-        margin-top: 100px;
-        background-color: brown;
-        height: 90px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: brown;
+    height: 90px;
+    color: yellow;
+    line-height: 90px;
+    font-family: 'Montserrat', sans-serif;
+    }
+
+    #main {
+    padding-bottom: 100px;
+    /* margin-top: 150px; */
+    }
+
+    body {
+        background-color: #F2F0EF;
     }
 </style>
 <body>
@@ -152,14 +170,14 @@
         <img src="Images/tplogo.png" alt="">
     </div> -->
 
-    <div id="body">
+    <div id="main">
         <div id="row-1">
             <div id="glick-1">
                 <img src="Images/plain.png" class="glicks">
                 <p>Plain</p>
                 <p>$5.00</p>
                 <button id="macros1" onclick="glick1Macros()">macros</button>
-                <button>Add To Cart</button>
+                <button onclick="addToCart('plain', 5.00, 'Images/plain.png')">Add To Cart</button>
             </div>
 
             <div id="glick-2">
@@ -167,7 +185,7 @@
                 <p>Loaded</p>
                 <p>$7.00</p>
                 <button id="macros2" onclick="glick2Macros()">macros</button>
-                <button>Add To Cart</button>
+                <button onclick="addToCart('Loaded', 7.00, 'Images/loaded.png')">Add To Cart</button>
             </div>
 
             <div id="glick-3">
@@ -175,7 +193,7 @@
                 <p>Cheese</p>
                 <p>$6.00</p>
                 <button id="macros3" onclick="glick3Macros()">macros</button>
-                <button>Add To Cart</button>
+                <button onclick="addToCart('Cheese', 6.00, 'Images/cheese.png')">Add To Cart</button>
             </div>
         </div>
 
@@ -185,7 +203,7 @@
                 <p>Nacho</p>
                 <p>$7.00</p>
                 <button id="macros4" onclick="glick4Macros()">macros</button>
-                <button>Add To Cart</button>
+                <button onclick="addToCart('Nacho', 7.00, 'Images/nacho.png')">Add To Cart</button>
             </div>
 
             <div id="glick-5">
@@ -193,7 +211,7 @@
                 <p>Chili</p>
                 <p>$6.00</p>
                 <button id="macros5" onclick="glick5Macros()">macros</button>
-                <button>Add To Cart</button>
+                <button onclick="addToCart('CHili', 6.00, 'Images/chili.png')">Add To Cart</button>
             </div>
 
             <div id="glick-6">
@@ -201,13 +219,13 @@
                 <p>Chicago</p>
                 <p>$7.00</p>
                 <button id="macros6" onclick="glick6Macros()">macros</button>
-                <button>Add To Cart</button>
+                <button onclick="addToCart('Chicago', 7.00, 'Images/chicago.png')">Add To Cart</button>
             </div>
         </div>
     </div>
 
     <div id="footer">
-        <p>Contact Us</p>
+        <p style="margin-left: 15px;"">Contact Us</p>
     </div>
     <script src="script.js"></script>
 </body>

@@ -53,3 +53,64 @@ function glick6Macros() {
 
     })
 }
+
+// 57-116 Joel
+
+function addToCart(name, price, image) {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    cart.push({ name, price, image });
+
+    localStorage.setItem('cart', JSON.stringify(cart));
+
+    alert(`${name} added to cart!`);
+}
+
+const cartContainer = document.getElementById('cartContainer');
+
+
+function renderCart() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    cartContainer.innerHTML = '';
+
+    if (cart.length === 0) {
+        cartContainer.innerHTML = "<p>Your cart is empty!</p>";
+        return;
+    }
+
+    cart.forEach((item, index) => {
+        const div = document.createElement('div');
+        div.classList.add('cart-item');
+        div.innerHTML = `
+            <img src="${item.image}" alt="${item.name}">
+            <p>${item.name}</p>
+            <p>$${item.price.toFixed(2)}</p>
+            <button onclick="removeItem(${index})">Remove</button>
+        `;
+        cartContainer.appendChild(div);
+    });
+
+    const total = cart.reduce((sum, item) => sum + item.price, 0);
+    const totalDiv = document.createElement('div');
+    totalDiv.style.marginTop = "1rem";
+    totalDiv.style.fontSize = "1.2rem";
+    totalDiv.style.color = "brown";
+    totalDiv.textContent = `Total: $${total.toFixed(2)}`;
+    cartContainer.appendChild(totalDiv);
+}
+
+
+function removeItem(index) {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    cart.splice(index, 1);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    renderCart(); 
+}
+
+renderCart();
+
+window.addEventListener('storage', function(event) {
+    if (event.key === 'cart') {
+        renderCart();
+    }
+});
