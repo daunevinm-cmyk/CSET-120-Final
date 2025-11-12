@@ -1,3 +1,5 @@
+<!-- Joel, Lines 1 - 163 -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +12,7 @@
         font-family: 'Montserrat', sans-serif;
         background-color: #F2F0EF;
         margin: 0;
-        padding: 20px;
+        /* padding: 20px; */
     }
     h1 {
         text-align: center;
@@ -47,11 +49,112 @@
         cursor: pointer;
         font-weight: bold;
     }
+
+    #header {
+    display: flex;
+    align-items: center;        /* centers items vertically */
+    justify-content: space-between;
+    background-color: brown;
+    height: 75px;
+    padding: 0 20px;
+}
+
+#header-1 h2 {
+    color: yellow;
+    margin: 0;                 /* remove default spacing */
+    font-size: 24px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+#logo {
+    height: 60px;              /* adjust as needed */
+    width: auto;
+    margin-top: 10px;          /* keeps image in same place */
+}
+
+#header-2 {
+    display: flex;
+    gap: 15px;
+    font-size: 20px;
+    color: yellow;
+    font-family: 'Montserrat', sans-serif;
+}
+
+#header-2 a {
+    color: yellow;
+    text-decoration: none;
+}
+
+.main-content {
+    display: flex;
+    justify-content: center;     /* centers horizontally on the page */
+    align-items: flex-start;     /* align logo and cart to the top */
+    gap: 40px;                   /* space between logo and cart */
+    margin-top: 40px;            /* space below header */
+}
+
+#logo-left {
+    width: 150px;                /* adjust as you like */
+    height: auto;
+}
+
+.cart-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1 {
+    text-align: center;
+    color: brown;
+    margin-bottom: 1rem;
+}
+
+#hidden-box {
+    display: none;
+    background-color: lightgray;
+    padding: 20px;
+    margin-top: 10px;
+    border-radius: 10px;
+}
+
+
 </style>
 </head>
 <body>
-<h1>Your Cart</h1>
-<div class="cart-container" id="cartContainer"></div>
+    <div id="header">
+        <div id="header-1">
+            <h2 style="color: yellow;">Glickmate</h2>
+        </div>
+
+        
+        <div id="header-2">
+            <a href="index.html" style="color: yellow; text-decoration: none;">Home</a>
+            <a href="cart.html" style="color: yellow; text-decoration: none;">Cart</a>
+            <a href="signup/signup.html" style="color: yellow; text-decoration: none;">Sign up</a>
+            <a href="login/login.html" style="color: yellow; text-decoration: none;">Login</a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <img src="Images/tplogo.png" id="logo-left">
+
+        <div>
+            <h1>Your Cart</h1>
+            <div class="cart-container" id="cartContainer"></div>
+            <button id="purchase">Purchase</button>
+        </div>            
+    </div>
+    
+    <div id="hidden-box">
+        <input type="text" placeholder="Address">
+        <input type="text" id="cardNumber" name="cardNumber" pattern="\d{16}" maxlength="16" required inputmode="numeric" placeholder="Card Number">
+        <input type="text" id="cvv" name="cvv" pattern="\d{3}" maxlength="3" required inputmode="numeric" placeholder="CVV">
+        <input type="text" placeholder="Exp. Date">
+        <input type="text" placeholder="Card Holder Name">
+        <input type="text" placeholder="Name On Order">
+        <button type="submit">Submit</button>
+    </div>
 
 
 <script src="script.js"></script>

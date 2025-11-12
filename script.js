@@ -114,3 +114,22 @@ window.addEventListener('storage', function(event) {
         renderCart();
     }
 });
+
+
+//Joel, Daunevin
+const purchaseButton = document.getElementById('purchase')
+const box = document.getElementById('hidden-box')
+
+purchaseButton.addEventListener('click', () => {
+
+    if (box.style.display === 'none' || box.style.display === '') {
+        box.style.display = 'block';
+        button.textContent = 'Hide Info';
+        }
+        else {
+            box.style.display = 'none'
+            button.textContent = 'Show Info'
+        }
+    
+})
+// SKIBIDI TOILET
