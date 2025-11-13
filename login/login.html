@@ -1,27 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Glickmate/signup</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Glickmate / Login</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
- <div id="logo">
-        <img src="../Images/tplogo.png">
-    </div>
-<div class="container">
-   
+  <div id="logo">
+    <img src="../Images/tplogo.png" alt="logo">
+  </div>
 
+  <div class="container">
     <h2>Sign In</h2>
 
     <div class="userinput">
-        <input type="text" id="username" name="username" placeholder="Username">
-        <input type="password" id="password" name="password" placeholder="Password">
-        <button id="loginBtn">Login</button>
+      <input type="text" id="username" placeholder="Username">
+      <input type="password" id="password" placeholder="Password">
+      <button id="loginBtn" onclick="login()">Login</button>
     </div>
-</div>
+  </div>
 
-<script src="script.js"></script>
+  <script>
+    function login() {
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
+
+      const storedUser = JSON.parse(localStorage.getItem("user"));
+
+      if (!storedUser) {
+        alert("No account found. Please sign up first!");
+        return;
+      }
+
+      if (username === storedUser.username && password === storedUser.password) {
+        alert(`Welcome back, ${storedUser.username}!`);
+        // Example: redirect to a dashboard page
+        window.location.href = "home.html";
+      } else {
+        alert("Incorrect username or password.");
+      }
+    }
+  </script>
 </body>
 </html>

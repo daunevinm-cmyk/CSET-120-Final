@@ -1,30 +1,46 @@
 <!-- Ethan, 1-30, could change -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Glickmate/signup</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Glickmate / Sign Up</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
- <div id="logo">
-        <img src="../Images/tplogo.png">
-    </div>
-<div class="container">
-   
+  <div id="logo">
+    <img src="../Images/tplogo.png" alt="logo">
+  </div>
 
+  <div class="container">
     <h2>Sign Up</h2>
 
     <div class="userinput">
-        <input type="text" id="username" name="username" placeholder="Username">
-        <input type="password" id="password" name="password" placeholder="Password">
-         <input type="email" id="email" name="email" placeholder="Email">
-        <button onclick="infolock()" id="SignupBtn">Sign Up</button>
+      <input type="text" id="username" placeholder="Username">
+      <input type="password" id="password" placeholder="Password">
+      <input type="email" id="email" placeholder="Email">
+      <button id="SignupBtn" onclick="signup()">Sign Up</button>
     </div>
-</div>
+  </div>
 
-<script src="script.js"></script>
+  <script>
+    function signup() {
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const email = document.getElementById("email").value.trim();
+
+      if (!username || !password || !email) {
+        alert("Please fill out all fields.");
+        return;
+      }
+
+      // Store account info in localStorage
+      const userData = { username, password, email };
+      localStorage.setItem("user", JSON.stringify(userData));
+
+      alert("Account created successfully!");
+      window.location.href = "login.html"; // Redirect to login page
+    }
+  </script>
 </body>
 </html>
