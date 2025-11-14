@@ -46,7 +46,7 @@ function glick5Macros() {
 }
 
 function glick6Macros() {
-    const button6 = document.getElementById("macros6")
+    const button6 = document.getElementById("macros6") 
 
     button6.addEventListener("click", () => {
             alert("Calories - 305 \n Protien - 11g \n Carbohydates - 30g \n Fat - 15g \n Saturated Fat - 7g \n Fiber - 1g \n Sugar - 3g \n Sodium - 850mg")
@@ -117,19 +117,84 @@ window.addEventListener('storage', function(event) {
 
 
 //Joel, Daunevin
-const purchaseButton = document.getElementById('purchase')
-const box = document.getElementById('hidden-box')
+
+
+
+    document.getElementById('cash').addEventListener('click', function () {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    const total = cart.reduce((sum, item) => sum + item.price, 0);
+
+    alert(`Thank you for your order!\nYour total is: $${total.toFixed(2)}`);
+
+    localStorage.removeItem('cart');
+
+    if (typeof renderCart === 'function') {
+        renderCart();
+    }
+
+    document.getElementById('hidden-box').style.display = 'none';
+});
+
+// PURCHASE BUTTON TOGGLE
+const purchaseButton = document.getElementById('purchase');
+const box = document.getElementById('hidden-box');
 
 purchaseButton.addEventListener('click', () => {
+    box.style.display = (box.style.display === 'none' || box.style.display === '') 
+        ? 'flex' 
+        : 'none';
+});
 
-    if (box.style.display === 'none' || box.style.display === '') {
-        box.style.display = 'block';
-        button.textContent = 'Hide Info';
-        }
-        else {
-            box.style.display = 'none'
-            button.textContent = 'Show Info'
-        }
-    
-})
-// SKIBIDI TOILET
+
+// PURCHASE SUBMIT BUTTON
+const submitButton = document.querySelector('#hidden-box button[type="submit"]');
+
+submitButton.addEventListener('click', function () {
+    // Get form inputs
+    const address = document.querySelector('#hidden-box input[placeholder="Address"]').value.trim();
+    const cardNum = document.getElementById('cardNumber').value.trim();
+    const cvv = document.getElementById('cvv').value.trim();
+    const exp = document.querySelector('#hidden-box input[placeholder="Exp. Date (MM/YY)"]').value.trim();
+    const holder = document.querySelector('#hidden-box input[placeholder="Card Holder Name"]').value.trim();
+    const orderName = document.querySelector('#hidden-box input[placeholder="Name On Order"]').value.trim();
+
+    // Check for empty fields
+    if (!address || !cardNum || !cvv || !exp || !holder || !orderName) {
+        alert("Please fill in all fields before submitting.");
+        return;
+    }
+
+    // Check card length
+    if (cardNum.length !== 16 || isNaN(cardNum)) {
+        alert("Card number must be 16 digits.");
+        return;
+    }
+
+    // Check CVV
+    if (cvv.length !== 3 || isNaN(cvv)) {
+        alert("CVV must be 3 digits.");
+        return;
+    }
+
+    // Get cart + total
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const total = cart.reduce((sum, item) => sum + item.price, 0);
+
+    // Success message
+    alert(`Thank you for your order!\nYour total is: $${total.toFixed(2)}`);
+
+    // Clear cart
+    localStorage.removeItem('cart');
+
+    // Re-render cart
+    if (typeof renderCart === 'function') {
+        renderCart();
+    }
+
+    // Close purchase box
+    box.style.display = 'none';
+
+    // Clear all inputs
+    document.querySelectorAll('#hidden-box input').forEach(input => input.value = '');
+});

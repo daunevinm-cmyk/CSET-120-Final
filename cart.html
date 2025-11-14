@@ -20,7 +20,7 @@
         margin-bottom: 1rem;
     }
 
-    /* Header */
+    
     #header {
         display: flex;
         align-items: center;
@@ -47,7 +47,7 @@
         text-decoration: none;
     }
 
-    /* Main layout */
+    
     .main-content {
         display: flex;
         justify-content: center;
@@ -177,21 +177,20 @@
     </div>
 
     <div id="hidden-box">
-        <input type="text" placeholder="Address">
+        <input type="text" placeholder="Address" required>
         <input type="text" id="cardNumber" name="cardNumber" pattern="\d{16}" maxlength="16" required inputmode="numeric" placeholder="Card Number">
         <input type="text" id="cvv" name="cvv" pattern="\d{3}" maxlength="3" required inputmode="numeric" placeholder="CVV">
         <input type="text" placeholder="Exp. Date (MM/YY)">
         <input type="text" placeholder="Card Holder Name">
         <input type="text" placeholder="Name On Order">
         <button type="submit">Submit</button>
+        <p>or</p>
+        <button id="cash">Cash</button>
     </div>
 
-<script>
-document.getElementById('purchase').addEventListener('click', function() {
-    const box = document.getElementById('hidden-box');
-    box.style.display = box.style.display === 'none' || box.style.display === '' ? 'flex' : 'none';
-});
-</script>
 
+
+
+<script src="script.js"></script>
 </body>
 </html>
