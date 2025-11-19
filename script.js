@@ -59,7 +59,7 @@ function glick6Macros() {
 function addToCart(name, price, image) {
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-    cart.push({ name, price, image });
+    cart.push({ name, price, image, quantity: 1});
 
     localStorage.setItem('cart', JSON.stringify(cart));
 
@@ -81,22 +81,42 @@ function renderCart() {
     cart.forEach((item, index) => {
         const div = document.createElement('div');
         div.classList.add('cart-item');
+
         div.innerHTML = `
             <img src="${item.image}" alt="${item.name}">
             <p>${item.name}</p>
             <p>$${item.price.toFixed(2)}</p>
+
+            <input 
+                type="number" 
+                min="1" 
+                value="${item.quantity || 1}" 
+                style="width: 60px; padding: 5px; border-radius: 5px;"
+                onchange="updateQuantity(${index}, this.value)"
+            >
+
             <button onclick="removeItem(${index})">Remove</button>
         `;
+
         cartContainer.appendChild(div);
     });
 
-    const total = cart.reduce((sum, item) => sum + item.price, 0);
+    const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
     const totalDiv = document.createElement('div');
     totalDiv.style.marginTop = "1rem";
     totalDiv.style.fontSize = "1.2rem";
     totalDiv.style.color = "brown";
     totalDiv.textContent = `Total: $${total.toFixed(2)}`;
+
     cartContainer.appendChild(totalDiv);
+}
+
+function updateQuantity(index, qty) {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    cart[index].quantity = Math.max(1, parseInt(qty)); // never below 1
+    localStorage.setItem('cart', JSON.stringify(cart));
+    renderCart();
 }
 
 
@@ -123,7 +143,7 @@ window.addEventListener('storage', function(event) {
     document.getElementById('cash').addEventListener('click', function () {
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-    const total = cart.reduce((sum, item) => sum + item.price, 0);
+    const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
     alert(`Thank you for your order!\nYour total is: $${total.toFixed(2)}`);
 
@@ -136,7 +156,8 @@ window.addEventListener('storage', function(event) {
     document.getElementById('hidden-box').style.display = 'none';
 });
 
-// PURCHASE BUTTON TOGGLE
+
+
 const purchaseButton = document.getElementById('purchase');
 const box = document.getElementById('hidden-box');
 
@@ -147,11 +168,9 @@ purchaseButton.addEventListener('click', () => {
 });
 
 
-// PURCHASE SUBMIT BUTTON
 const submitButton = document.querySelector('#hidden-box button[type="submit"]');
 
 submitButton.addEventListener('click', function () {
-    // Get form inputs
     const address = document.querySelector('#hidden-box input[placeholder="Address"]').value.trim();
     const cardNum = document.getElementById('cardNumber').value.trim();
     const cvv = document.getElementById('cvv').value.trim();
@@ -159,42 +178,34 @@ submitButton.addEventListener('click', function () {
     const holder = document.querySelector('#hidden-box input[placeholder="Card Holder Name"]').value.trim();
     const orderName = document.querySelector('#hidden-box input[placeholder="Name On Order"]').value.trim();
 
-    // Check for empty fields
     if (!address || !cardNum || !cvv || !exp || !holder || !orderName) {
         alert("Please fill in all fields before submitting.");
         return;
     }
 
-    // Check card length
     if (cardNum.length !== 16 || isNaN(cardNum)) {
         alert("Card number must be 16 digits.");
         return;
     }
 
-    // Check CVV
     if (cvv.length !== 3 || isNaN(cvv)) {
         alert("CVV must be 3 digits.");
         return;
     }
 
-    // Get cart + total
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    const total = cart.reduce((sum, item) => sum + item.price, 0);
+    const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
-    // Success message
     alert(`Thank you for your order!\nYour total is: $${total.toFixed(2)}`);
 
-    // Clear cart
     localStorage.removeItem('cart');
 
-    // Re-render cart
     if (typeof renderCart === 'function') {
         renderCart();
     }
 
-    // Close purchase box
     box.style.display = 'none';
 
-    // Clear all inputs
     document.querySelectorAll('#hidden-box input').forEach(input => input.value = '');
 });
+
