@@ -8,6 +8,12 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+   <div id="header-2">
+            <p>Home</p>
+            <a href="cart.html" style="color: yellow; text-decoration: none;">Cart</a>
+            <a href="signup/signup.html" style="color: yellow; text-decoration: none;">Sign up</a>
+            <a href="login/login.html" style="color: yellow; text-decoration: none;">Login</a>
+        </div>
   <div id="logo">
     <img src="../Images/tplogo.png" alt="logo">
   </div>
@@ -24,23 +30,37 @@
   </div>
 
   <script>
-    function signup() {
-      const username = document.getElementById("username").value.trim();
-      const password = document.getElementById("password").value.trim();
-      const email = document.getElementById("email").value.trim();
+  function signup() {
+    const username = document.getElementById("username").value.trim();
+    const password = document.getElementById("password").value.trim();
+    const email = document.getElementById("email").value.trim();
 
-      if (!username || !password || !email) {
-        alert("Please fill out all fields.");
-        return;
-      }
-
-      // Store account info in localStorage
-      const userData = { username, password, email };
-      localStorage.setItem("user", JSON.stringify(userData));
-
-      alert("Account created successfully!");
-      window.location.href = "login.html"; // Redirect to login page
+    if (!username || !password || !email) {
+      alert("Please fill out all fields.");
+      return;
     }
-  </script>
+
+    
+    const strongPass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+
+    if (!strongPass.test(password)) {
+      alert(
+        "Password must be at least 8 characters long and include:\n" +
+        "- Uppercase letter\n" +
+        "- Lowercase letter\n" +
+        "- Number\n" +
+        "- Special character"
+      );
+      return;
+    }
+
+    const userData = { username, password, email };
+    localStorage.setItem("user", JSON.stringify(userData));
+
+    alert("Account created successfully!");
+    window.location.href = "../login/login.html";
+  }
+</script>
+
 </body>
 </html>
