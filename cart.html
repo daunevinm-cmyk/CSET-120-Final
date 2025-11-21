@@ -20,7 +20,6 @@
         margin-bottom: 1rem;
     }
 
-    
     #header {
         display: flex;
         align-items: center;
@@ -47,7 +46,6 @@
         text-decoration: none;
     }
 
-    
     .main-content {
         display: flex;
         justify-content: center;
@@ -150,10 +148,10 @@
     #hidden-box button:hover {
         transform: scale(1.05);
     }
-
 </style>
 </head>
 <body>
+
     <div id="header">
         <div id="header-1">
             <h2>Glickmate</h2>
@@ -178,8 +176,8 @@
 
     <div id="hidden-box">
         <input type="text" placeholder="Address" required>
-        <input type="text" id="cardNumber" name="cardNumber" pattern="\d{16}" maxlength="16" required inputmode="numeric" placeholder="Card Number">
-        <input type="text" id="cvv" name="cvv" pattern="\d{3}" maxlength="3" required inputmode="numeric" placeholder="CVV">
+        <input type="text" id="cardNumber" pattern="\d{16}" maxlength="16" required inputmode="numeric" placeholder="Card Number">
+        <input type="text" id="cvv" pattern="\d{3}" maxlength="3" required inputmode="numeric" placeholder="CVV">
         <input type="text" placeholder="Exp. Date (MM/YY)">
         <input type="text" placeholder="Card Holder Name">
         <input type="text" placeholder="Name On Order">
@@ -187,9 +185,6 @@
         <p>or</p>
         <button id="cash">Cash</button>
     </div>
-
-
-
 
 <script src="script.js"></script>
 </body>

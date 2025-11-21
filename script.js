@@ -4,8 +4,7 @@ function glick1Macros() {
     const button1 = document.getElementById("macros1")
 
     button1.addEventListener("click", () => {
-            alert("Calories - 290 \n Protien - 11g \n Carbohydates - 24g \n Fat - 17g \n Saturated Fat - 7g \n Fiber - 1g \n Sugar - 3g \n Sodium - 850mg")
-
+        alert("Calories - 290 \n Protien - 11g \n Carbohydates - 24g \n Fat - 17g \n Saturated Fat - 7g \n Fiber - 1g \n Sugar - 3g \n Sodium - 850mg")
     })
 }
 
@@ -13,8 +12,7 @@ function glick2Macros() {
     const button2 = document.getElementById("macros2")
 
     button2.addEventListener("click", () => {
-            alert("Calories - 500 \n Protien - 20g \n Carbohydates - 35g \n Fat - 30g \n Saturated Fat - 11g \n Fiber - 2g \n Sugar - 6g \n Sodium - 1300mg")
-
+        alert("Calories - 500 \n Protien - 20g \n Carbohydates - 35g \n Fat - 30g \n Saturated Fat - 11g \n Fiber - 2g \n Sugar - 6g \n Sodium - 1300mg")
     })
 }
 
@@ -22,8 +20,7 @@ function glick3Macros() {
     const button3 = document.getElementById("macros3")
 
     button3.addEventListener("click", () => {
-            alert("Calories - 400 \n Protien - 17g \n Carbohydates - 24g \n Fat - 25g \n Saturated Fat - 10g \n Fiber - 1g \n Sugar - 3g \n Sodium - 1000mg")
-
+        alert("Calories - 400 \n Protien - 17g \n Carbohydates - 24g \n Fat - 25g \n Saturated Fat - 10g \n Fiber - 1g \n Sugar - 3g \n Sodium - 1000mg")
     })
 }
 
@@ -31,8 +28,7 @@ function glick4Macros() {
     const button4 = document.getElementById("macros4")
 
     button4.addEventListener("click", () => {
-            alert("Calories - 500 \n Protien - 19g \n Carbohydates - 34g \n Fat - 30g \n Saturated Fat - 11g \n Fiber - 2g \n Sugar - 4g \n Sodium - 1300mg")
-
+        alert("Calories - 500 \n Protien - 19g \n Carbohydates - 34g \n Fat - 30g \n Saturated Fat - 11g \n Fiber - 2g \n Sugar - 4g \n Sodium - 1300mg")
     })
 }
 
@@ -40,17 +36,15 @@ function glick5Macros() {
     const button5 = document.getElementById("macros5")
 
     button5.addEventListener("click", () => {
-            alert("Calories - 460 \n Protien - 20g \n Carbohydates - 30g \n Fat - 30g \n Saturated Fat - 11g \n Fiber - 2g \n Sugar - 4g \n Sodium - 1100mg")
-
+        alert("Calories - 460 \n Protien - 20g \n Carbohydates - 30g \n Fat - 30g \n Saturated Fat - 11g \n Fiber - 2g \n Sugar - 4g \n Sodium - 1100mg")
     })
 }
 
 function glick6Macros() {
-    const button6 = document.getElementById("macros6") 
+    const button6 = document.getElementById("macros6")
 
     button6.addEventListener("click", () => {
-            alert("Calories - 305 \n Protien - 11g \n Carbohydates - 30g \n Fat - 15g \n Saturated Fat - 7g \n Fiber - 1g \n Sugar - 3g \n Sodium - 850mg")
-
+        alert("Calories - 305 \n Protien - 11g \n Carbohydates - 30g \n Fat - 15g \n Saturated Fat - 7g \n Fiber - 1g \n Sugar - 3g \n Sodium - 850mg")
     })
 }
 
@@ -59,7 +53,7 @@ function glick6Macros() {
 function addToCart(name, price, image) {
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-    cart.push({ name, price, image, quantity: 1});
+    cart.push({ name, price, image, quantity: 1 });
 
     localStorage.setItem('cart', JSON.stringify(cart));
 
@@ -67,7 +61,6 @@ function addToCart(name, price, image) {
 }
 
 const cartContainer = document.getElementById('cartContainer');
-
 
 function renderCart() {
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -114,59 +107,72 @@ function renderCart() {
 
 function updateQuantity(index, qty) {
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
-    cart[index].quantity = Math.max(1, parseInt(qty)); // never below 1
+    cart[index].quantity = Math.max(1, parseInt(qty));
     localStorage.setItem('cart', JSON.stringify(cart));
     renderCart();
 }
-
 
 function removeItem(index) {
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
     cart.splice(index, 1);
     localStorage.setItem('cart', JSON.stringify(cart));
-    renderCart(); 
+    renderCart();
 }
 
 renderCart();
 
-window.addEventListener('storage', function(event) {
+window.addEventListener('storage', function (event) {
     if (event.key === 'cart') {
         renderCart();
     }
 });
 
+function showPurchaseAlert(method) {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-//Joel, Daunevin
-
-
-
-    document.getElementById('cash').addEventListener('click', function () {
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-    const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-
-    alert(`Thank you for your order!\nYour total is: $${total.toFixed(2)}`);
-
-    localStorage.removeItem('cart');
-
-    if (typeof renderCart === 'function') {
-        renderCart();
+    if (cart.length === 0) {
+        alert("Your cart is empty.");
+        return;
     }
 
+    let msg = "Thank you for your purchase!\n";
+    msg += "---------------------------------\n";
+    msg += "Items Purchased:\n\n";
+
+    let total = 0;
+
+    cart.forEach(item => {
+        const itemTotal = item.price * item.quantity;
+        total += itemTotal;
+
+        msg += `${item.name} — Qty: ${item.quantity} — $${item.price} each\n`;
+        msg += `Subtotal: $${itemTotal}\n\n`;
+    });
+
+    msg += "---------------------------------\n";
+    msg += `Total: $${total}\n`;
+    msg += `Payment Method: ${method}\n`;
+    msg += "---------------------------------";
+
+    alert(msg);
+
+    localStorage.removeItem('cart');
+    renderCart();
     document.getElementById('hidden-box').style.display = 'none';
+}
+
+document.getElementById('cash').addEventListener('click', function () {
+    showPurchaseAlert("Cash");
 });
-
-
 
 const purchaseButton = document.getElementById('purchase');
 const box = document.getElementById('hidden-box');
 
 purchaseButton.addEventListener('click', () => {
-    box.style.display = (box.style.display === 'none' || box.style.display === '') 
-        ? 'flex' 
+    box.style.display = (box.style.display === 'none' || box.style.display === '')
+        ? 'flex'
         : 'none';
 });
-
 
 const submitButton = document.querySelector('#hidden-box button[type="submit"]');
 
@@ -193,19 +199,7 @@ submitButton.addEventListener('click', function () {
         return;
     }
 
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-
-    alert(`Thank you for your order!\nYour total is: $${total.toFixed(2)}`);
-
-    localStorage.removeItem('cart');
-
-    if (typeof renderCart === 'function') {
-        renderCart();
-    }
-
-    box.style.display = 'none';
+    showPurchaseAlert("Card");
 
     document.querySelectorAll('#hidden-box input').forEach(input => input.value = '');
 });
-
