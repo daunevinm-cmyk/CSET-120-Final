@@ -9,147 +9,167 @@
 </head>
 <style>
 /* Daunevin 11-233, could change*/
-    * {
-        margin: 0;
-    }
 
-    .glicks {
-        width: 300px;
-        height: 200px;
-    
-    }
+* {
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
 
-    #row-1 {
-        display: flex;
-        flex-direction: row;
-        gap: 40px;
-        margin-bottom: 40px;
-        justify-content: center;
-        align-items: center;
-    }
-
-    #row-2 {
-        display: flex;
-        flex-direction: row;
-        gap: 40px;
-        justify-content: center;
-        align-items: center;
-    }
+body {
+    background-color: #F2F0EF;
+    color: #333;
+}
 
 
-    #glick-1 {
-        border: 2px solid black;
-        text-align: center;
-        padding: 10px;
-        background-color: brown;
-        font-family: 'Montserrat', sans-serif;
-        color: yellow;
-    }
+#header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: brown; 
+    padding: 0 30px;
+    height: 85px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
 
-    #glick-2 {
-        border: 2px solid black;
-        text-align: center;
-        padding: 10px;
-        background-color: brown;
-        font-family: 'Montserrat', sans-serif;
-        color: yellow;
-    }
+#header-1 h2 {
+    color: #FFD84D;
+    font-size: 28px;
+    font-weight: 700;
+}
 
-    #glick-3 {
-        border: 2px solid black;
-        text-align: center;
-        padding: 10px;
-        background-color: brown;
-        font-family: 'Montserrat', sans-serif;
-        color: yellow;
-    }
+#header-1 img {
+    width: 55px;
+    height: 55px;
+    margin-left: 10px;
+}
 
-    #glick-4 {
-        border: 2px solid black;
-        text-align: center;
-        padding: 10px;
-        background-color: brown;
-        font-family: 'Montserrat', sans-serif;
-        color: yellow;
-    }
+#header-1 {
+    display: flex;
+    align-items: center;
+}
 
-    #glick-5 {
-        border: 2px solid black;
-        text-align: center;
-        padding: 10px;
-        background-color: brown;
-        font-family: 'Montserrat', sans-serif;
-        color: yellow;
-    }
+#header-2 {
+    display: flex;
+    gap: 25px;
+    font-size: 18px;
+}
 
-    #glick-6 {
-        border: 2px solid black;
-        text-align: center;
-        padding: 10px;
-        background-color: brown;
-        font-family: 'Montserrat', sans-serif;
-        color: yellow;
-    }
+#header-2 a, #header-2 p {
+    color: #FFD84D;
+    text-decoration: none;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
 
-    #header-2 {
-        display: flex;
-        gap: 15px;
-        margin-top: 20px;
-        font-size: 20px;
-        color: yellow;
-        font-family: 'Montserrat', sans-serif;
+#header-2 a:hover, #header-2 p:hover {
+    color: #fff;
+}
 
-    }
 
-    #header {
-        display: flex;
-        background-color: brown;
-        margin-bottom: 20px;
-        height: 75px;
-        justify-content: space-between;
-        padding: 0 20px;
-    }
+#row-1,
+#row-2 {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-bottom: 40px;
+}
 
-    #header-1 {
-        margin-top: 20px;
-        margin-left: 5px;
-        font-family: 'Montserrat', sans-serif;
-        font-size: 20px;
-    }
+.glicks {
+    width: 280px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 10px;
+}
 
-    button {
-        background-color: yellow;
-        width: 125px;
-        height: 35px;
-        border-radius: 25px;
-    }
 
-    #logo {
-        display: flex;
-        width: 500px;
-        height: 500px;
-    }
+[id^="glick-"] {
+    background-color: brown
+    border: none;
+    color: #FFD84D;
+    width: 320px;
+    padding: 15px;
+    border-radius: 18px;
+    text-align: center;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+    transition: transform 0.2s ease, box-shadow 0.25s ease;
+}
 
-    #footer {
+[id^="glick-"]:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.28);
+}
+
+
+button {
+    margin-top: 10px;
+    background-color: #FFD84D;
+    color: brown;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: 0.2s ease;
+}
+
+button:hover {
+    background-color: #FFE892;
+    transform: scale(1.05);
+}
+
+/* Footer */
+#footer {
     position: fixed;
     bottom: 0;
     left: 0;
-    width: 100%;
     background-color: brown;
-    height: 90px;
-    color: yellow;
-    line-height: 90px;
-    font-family: 'Montserrat', sans-serif;
+    width: 100%;
+    height: 85px;
+    color: #FFD84D;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+    font-size: 18px;
+    box-shadow: 0 -4px 8px rgba(0,0,0,0.2);
+}
+
+#main {
+    padding-bottom: 120px;
+}
+
+
+@media (max-width: 900px) {
+    #row-1,
+    #row-2 {
+        flex-direction: column;
+        align-items: center;
+        gap: 25px;
     }
 
-    #main {
-    padding-bottom: 100px;
-    /* margin-top: 150px; */
+    [id^="glick-"] {
+        width: 90%;
     }
 
-    body {
-        background-color: #F2F0EF;
+    #header {
+        flex-direction: column;
+        height: auto;
+        padding: 15px;
+        gap: 10px;
     }
+
+    #header-2 {
+        gap: 15px;
+    }
+
+    #footer {
+        text-align: center;
+        justify-content: center;
+        padding-left: 0;
+    }
+}
+
 </style>
 <body>
 
