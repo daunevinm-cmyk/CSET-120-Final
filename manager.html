@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Glickmate / Manager Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      box-sizing: border-box;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    body {
+      background-color: #F2F0EF;
+    }
+
+    #header-2 {
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      background-color: brown;
+      padding: 18px 0;
+      font-size: 18px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.25);
+    }
+
+    #header-2 a, #header-2 p {
+      color: #FFD84D;
+      text-decoration: none;
+      font-weight: 600;
+      transition: 0.2s ease;
+      cursor: pointer;
+    }
+
+    #header-2 a:hover, #header-2 p:hover {
+      color: white;
+    }
+
+    #logo {
+      display: flex;
+      justify-content: center;
+      margin-top: 40px;
+    }
+    #logo img {
+      width: 180px;
+      height: 180px;
+    }
+
+    .container {
+      background-color: white;
+      width: 350px;
+      margin: 40px auto;
+      padding: 30px;
+      text-align: center;
+      border-radius: 18px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.20);
+    }
+
+    h2 {
+      color: brown;
+      margin-bottom: 20px;
+      font-size: 26px;
+      font-weight: 700;
+    }
+    
+    .manager-label {
+      color: #FFD84D;
+      background-color: brown;
+      padding: 6px 14px;
+      font-size: 14px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+      display: inline-block;
+      letter-spacing: 1px;
+    }
+
+    .userinput input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      outline: none;
+      font-size: 15px;
+      transition: 0.2s ease;
+    }
+
+    .userinput input:focus {
+      border-color: brown;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #FFD84D;
+      color: brown;
+      border: none;
+      border-radius: 25px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.2s ease;
+      margin-top: 5px;
+    }
+
+    button:hover {
+      background-color: #FFE892;
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="header-2">
+    <p>Home</p>
+    <a href="../cart.html">Cart</a>
+    <a href="../signup/signup.html">Sign up</a>
+    <a href="../login/login.html">Login</a>
+  </div>
+
+  
+  <div id="logo">
+    <img src="../Images/tplogo.png" alt="logo">
+  </div>
+
+  
+  <div class="container">
+    <span class="manager-label">MANAGER ACCESS</span>
+    <h2>Manager Login</h2>
+
+    <div class="userinput">
+      <input type="text" id="username" placeholder="Manager Username">
+      <input type="password" id="password" placeholder="Password">
+      <button onclick="managerLogin()">Login</button>
+    </div>
+  </div>
+
+  <script>
+    
+    function managerLogin() {
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
+
+      if (!username || !password) {
+        alert("Please enter both username and password.");
+        return;
+      }
+
+      
+      const managerUser = "admin";
+      const managerPass = "admin123";
+
+      if (username === managerUser && password === managerPass) {
+        alert("Manager login successful!");
+        window.location.href = "../manager-dashboard.html";
+      } else {
+        alert("Invalid manager credentials.");
+      }
+    }
+  </script>
+
+</body>
+</html>

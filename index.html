@@ -1,249 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Glickmate</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glickmate</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 
-</head>
 <style>
-/* Daunevin 11-233, could change*/
 
 * {
-    margin: 0;
-    box-sizing: border-box;
-    font-family: 'Montserrat', sans-serif;
+    margin:0; box-sizing:border-box; font-family:'Montserrat', sans-serif;
 }
-
 body {
-    background-color: #F2F0EF;
-    color: #333;
+    background-color:#F2F0EF; color:#333;
 }
-
-
 #header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: brown; 
-    padding: 0 30px;
-    height: 85px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    display:flex; justify-content:space-between; align-items:center; background-color:brown; padding:0 30px; height:85px; box-shadow:0 4px 8px rgba(0,0,0,0.2);
 }
-
-#header-1 h2 {
-    color: #FFD84D;
-    font-size: 28px;
-    font-weight: 700;
-}
-
-#header-1 img {
-    width: 55px;
-    height: 55px;
-    margin-left: 10px;
-}
-
 #header-1 {
-    display: flex;
-    align-items: center;
+    display:flex; align-items:center;
 }
-
+#header-1 h2 {
+    color:#FFD84D; font-size:28px; font-weight:700;
+}
+#header-1 img {
+    width:55px; height:55px; margin-left:10px;
+}
 #header-2 {
-    display: flex;
-    gap: 25px;
-    font-size: 18px;
+    display:flex; gap:25px; font-size:18px;
 }
-
 #header-2 a, #header-2 p {
-    color: #FFD84D;
-    text-decoration: none;
-    cursor: pointer;
-    transition: 0.2s ease;
+    color:#FFD84D; text-decoration:none; cursor:pointer; transition:0.2s ease;
 }
-
 #header-2 a:hover, #header-2 p:hover {
-    color: #fff;
+    color:#fff;
 }
-
-
-#row-1,
-#row-2 {
-    display: flex;
-    justify-content: center;
-    gap: 40px;
-    margin-bottom: 40px;
+#menu-container {
+    display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:40px; padding:40px; justify-items:center;
 }
-
-.glicks {
-    width: 280px;
-    height: 180px;
-    object-fit: cover;
-    border-radius: 10px;
+.menu-box {
+    background-color:brown; color:#FFD84D; width:320px; padding:15px; border-radius:18px; text-align:center; box-shadow:0 6px 15px rgba(0,0,0,0.2); transition:transform 0.2s ease, box-shadow 0.25s ease;
 }
-
-
-[id^="glick-"] {
-    background-color: brown
-    border: none;
-    color: #FFD84D;
-    width: 320px;
-    padding: 15px;
-    border-radius: 18px;
-    text-align: center;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
-    transition: transform 0.2s ease, box-shadow 0.25s ease;
+.menu-box:hover {
+    transform:translateY(-6px); box-shadow:0 10px 20px rgba(0,0,0,0.28);
 }
-
-[id^="glick-"]:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.28);
+.menu-box img {
+    width:280px; height:180px; object-fit:cover; border-radius:10px;
 }
-
-
 button {
-    margin-top: 10px;
-    background-color: #FFD84D;
-    color: brown;
-    border: none;
-    padding: 10px 18px;
-    border-radius: 25px;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 600;
-    transition: 0.2s ease;
+    margin-top:10px; background-color:#FFD84D; color:brown; border:none; padding:10px 18px; border-radius:25px; cursor:pointer; font-size:14px; font-weight:600; transition:0.2s ease;
 }
-
 button:hover {
-    background-color: #FFE892;
-    transform: scale(1.05);
+    background-color:#FFE892; transform:scale(1.05);
 }
-
-/* Footer */
 #footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    background-color: brown;
-    width: 100%;
-    height: 85px;
-    color: #FFD84D;
-    display: flex;
-    align-items: center;
-    padding-left: 20px;
-    font-size: 18px;
-    box-shadow: 0 -4px 8px rgba(0,0,0,0.2);
+    position:fixed; bottom:0; left:0; background-color:brown; width:100%; height:85px; color:#FFD84D; display:flex; align-items:center; padding-left:20px; font-size:18px; box-shadow:0 -4px 8px rgba(0,0,0,0.2);
 }
-
-#main {
-    padding-bottom: 120px;
-}
-
-
-@media (max-width: 900px) {
-    #row-1,
-    #row-2 {
-        flex-direction: column;
-        align-items: center;
-        gap: 25px;
+@media(max-width:900px){
+    #header{flex-direction:column;height:auto;padding:15px;gap:10px;}#header-2{gap:15px;}#footer{text-align:center; justify-content:center; padding-left:0; display:flex; flex-direction:row; justify-content:space-between;}
     }
-
-    [id^="glick-"] {
-        width: 90%;
-    }
-
-    #header {
-        flex-direction: column;
-        height: auto;
-        padding: 15px;
-        gap: 10px;
-    }
-
-    #header-2 {
-        gap: 15px;
-    }
-
-    #footer {
-        text-align: center;
-        justify-content: center;
-        padding-left: 0;
-    }
-}
-
 </style>
+</head>
 <body>
 
-    <div id="header">
-        <div id="header-1">
-            <h2 style="color: yellow">Glickmate</h2>
-            <img src="Images/tplogo.png">
-        </div>
 
-        <div id="header-2">
-            <p>Home</p>
-            <a href="cart.html" style="color: yellow; text-decoration: none;">Cart</a>
-            <a href="signup/signup.html" style="color: yellow; text-decoration: none;">Sign up</a>
-            <a href="login/login.html" style="color: yellow; text-decoration: none;">Login</a>
-        </div>
-    </div>
-    
-    <div id="main">
-        <div id="row-1">
-            <div id="glick-1">
-                <img src="Images/plain.png" class="glicks">
-                <p>Plain</p>
-                <p>$5.00</p>
-                <button id="macros1" onclick="glick1Macros()">macros</button>
-                <button onclick="addToCart('plain', 5.00, 'Images/plain.png')">Add To Cart</button>
-            </div>
-
-            <div id="glick-2">
-                <img src="Images/loaded.png" class="glicks">
-                <p>Loaded</p>
-                <p>$7.00</p>
-                <button id="macros2" onclick="glick2Macros()">macros</button>
-                <button onclick="addToCart('Loaded', 7.00, 'Images/loaded.png')">Add To Cart</button>
-            </div>
-
-            <div id="glick-3">
-                <img src="Images/cheese.png" class="glicks">
-                <p>Cheese</p>
-                <p>$6.00</p>
-                <button id="macros3" onclick="glick3Macros()">macros</button>
-                <button onclick="addToCart('Cheese', 6.00, 'Images/cheese.png')">Add To Cart</button>
-            </div>
-        </div>
-
-        <div id="row-2">
-            <div id="glick-4">
-                <img src="Images/nacho.png" class="glicks">
-                <p>Nacho</p>
-                <p>$7.00</p>
-                <button id="macros4" onclick="glick4Macros()">macros</button>
-                <button onclick="addToCart('Nacho', 7.00, 'Images/nacho.png')">Add To Cart</button>
-            </div>
-
-            <div id="glick-5">
-                <img src="Images/chili.png" class="glicks">
-                <p>Chili</p>
-                <p>$6.00</p>
-                <button id="macros5" onclick="glick5Macros()">macros</button>
-                <button onclick="addToCart('CHili', 6.00, 'Images/chili.png')">Add To Cart</button>
-            </div>
-
-            <div id="glick-6">
-                <img src="Images/chicago.png" class="glicks">
-                <p>Chicago</p>
-                <p>$7.00</p>
-                <button id="macros6" onclick="glick6Macros()">macros</button>
-                <button onclick="addToCart('Chicago', 7.00, 'Images/chicago.png')">Add To Cart</button>
-            </div>
-        </div>
+<div id="header">
+    <div id="header-1">
+        <h2 style="color: yellow">Glickmate</h2>
+        <img src="Images/tplogo.png">
     </div>
 
-    <div id="footer">
-        <p style="margin-left: 15px;"">Contact Us</p>
+    <div id="header-2">
+        <p>Home</p>
+        <a href="cart.html">Cart</a>
+        <a href="signup/signup.html">Sign up</a>
+        <a href="login/login.html">Login</a>
     </div>
-    <script src="script.js"></script>
+</div>
+
+
+<div id="menu-container"></div>
+
+
+<div id="footer">
+    <p style="margin-left:15px;">Contact Us</p>
+    <a href="manager.html" style="color: yellow; text-decoration: none; margin-left: 20px;">Manager Login</a>
+</div>
+
+<script>
+let defaultMenu = [
+    { name: "Plain", price: 5.00, image: "Images/plain.png", enabled: true },
+    { name: "Loaded", price: 7.00, image: "Images/loaded.png", enabled: true },
+    { name: "Cheese", price: 6.00, image: "Images/cheese.png", enabled: true },
+    { name: "Nacho", price: 7.00, image: "Images/nacho.png", enabled: true },
+    { name: "Chili", price: 6.00, image: "Images/chili.png", enabled: true },
+    { name: "Chicago", price: 7.00, image: "Images/chicago.png", enabled: true }
+];
+
+
+if(!localStorage.getItem("glickMenu")) {
+    localStorage.setItem("glickMenu", JSON.stringify(defaultMenu));
+}
+
+function loadMenu() {
+    const menu = JSON.parse(localStorage.getItem("glickMenu"));
+    const container = document.getElementById("menu-container");
+    container.innerHTML = "";
+
+    menu.forEach((item, index) => {
+        if(!item.enabled) return; 
+
+        const box = document.createElement("div");
+        box.className = "menu-box";
+
+        box.innerHTML = `
+            <img src="${item.image}">
+            <h3>${item.name}</h3>
+            <p>$${Number(item.price).toFixed(2)}</p>
+            <button onclick="addToCart('${item.name}', ${item.price}, '${item.image}')">Add To Cart</button>
+        `;
+
+        container.appendChild(box);
+    });
+}
+
+function addToCart(name, price, image) {
+    alert(`${name} added to cart for $${price.toFixed(2)}`);
+}
+
+document.addEventListener("DOMContentLoaded", loadMenu);
+</script>
+
 </body>
 </html>

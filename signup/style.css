@@ -9,13 +9,16 @@
 
 body {
     background: #F2F0EF;
-    color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    height: 700px;
+    color: #000;
 }
+
+.page-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 40px;
+}
+
 
 .container {
     background: #CC2522;
@@ -85,11 +88,16 @@ button:active
      
 }
  #header-2 {
-        display: flex;
-        gap: 15px;
-        margin-top: 20px;
-        font-size: 20px;
-        color: yellow;
-        font-family: 'Montserrat', sans-serif;
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+    padding: 15px;
+    font-size: 20px;
+    color: yellow;
+    background: #CC2522; /* add this */
+    width: 100%;         /* add this */
+}
 
-    }
+#header-2 p, #header-2 a {
+    color: yellow;
+}

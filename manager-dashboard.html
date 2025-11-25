@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Manager Menu Controls</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+    body {
+        background: #F2F0EF;
+        font-family: "Montserrat", sans-serif;
+        padding: 40px;
+    }
+
+    h1 {
+        color: brown;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .menu-card {
+        background: white;
+        border: 2px solid brown;
+        border-radius: 16px;
+        padding: 18px;
+        margin: 15px auto;
+        width: 400px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    label {
+        font-weight: bold;
+        color: brown;
+    }
+
+    input[type="text"],
+    input[type="number"] {
+        width: 100%;
+        padding: 8px;
+        margin: 6px 0 12px 0;
+        border: 1px solid #aaa;
+        border-radius: 6px;
+    }
+
+    .toggle-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    button {
+        display: block;
+        margin: 30px auto;
+        padding: 14px 30px;
+        background: #FFD84D;
+        color: brown;
+        font-weight: bold;
+        border: none;
+        border-radius: 22px;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    button:hover {
+        background: #FFE892;
+        transform: scale(1.05);
+    }
+</style>
+</head>
+
+<body>
+
+<h1>Manager Menu Controls</h1>
+
+<div id="menu-edit-container"></div>
+
+<button onclick="saveMenu()">Save Changes</button>
+
+<script>
+const defaultMenu = [
+    { name: "Plain", price: 5.00, image: "Images/plain.png", enabled: true },
+    { name: "Loaded", price: 7.00, image: "Images/loaded.png", enabled: true },
+    { name: "Cheese", price: 6.00, image: "Images/cheese.png", enabled: true },
+    { name: "Nacho", price: 7.00, image: "Images/nacho.png", enabled: true },
+    { name: "Chili", price: 6.00, image: "Images/chili.png", enabled: true },
+    { name: "Chicago", price: 7.00, image: "Images/chicago.png", enabled: true }
+];
+
+let menu = JSON.parse(localStorage.getItem("glickMenu")) || defaultMenu;
+
+function buildEditor() {
+    const container = document.getElementById("menu-edit-container");
+    container.innerHTML = "";
+
+    menu.forEach((item, index) => {
+
+        const card = document.createElement("div");
+        card.className = "menu-card";
+
+        card.innerHTML = `
+            <div class="toggle-row">
+                <label>${item.name}</label>
+                <input type="checkbox" id="enable-${index}" ${item.enabled ? "checked" : ""}>
+            </div>
+
+            <label>Item Name:</label>
+            <input type="text" id="name-${index}" value="${item.name}">
+
+            <label>Price ($):</label>
+            <input type="number" id="price-${index}" value="${item.price}" step="0.01">
+
+            <label>Image URL:</label>
+            <input type="text" id="img-${index}" value="${item.image}">
+        `;
+
+        container.appendChild(card);
+    });
+}
+
+function saveMenu() {
+    menu.forEach((item, index) => {
+        item.enabled = document.getElementById(`enable-${index}`).checked;
+        item.name = document.getElementById(`name-${index}`).value;
+        item.price = parseFloat(document.getElementById(`price-${index}`).value);
+        item.image = document.getElementById(`img-${index}`).value;
+    });
+
+    localStorage.setItem("glickMenu", JSON.stringify(menu));
+
+    alert("Menu Updated! Refresh the homepage to see changes.");
+}
+
+
+buildEditor();
+</script>
+
+</body>
+</html>

@@ -203,3 +203,50 @@ submitButton.addEventListener('click', function () {
 
     document.querySelectorAll('#hidden-box input').forEach(input => input.value = '');
 });
+
+function applyMenuSettings() {
+    const settings = JSON.parse(localStorage.getItem("menuSettings")) || {};
+
+    document.querySelectorAll(".menu-item").forEach(item => {
+        const id = item.id;
+        if (settings[id] === false) {
+            item.style.display = "none";
+        } else {
+            item.style.display = "block";
+        }
+    });
+}
+
+applyMenuSettings();
+
+window.onload = function () {
+    const settings = JSON.parse(localStorage.getItem("menuSettings")) || {};
+
+    for (let i = 1; i <= 6; i++) {
+        const item = document.getElementById("glick-" + i);
+        const key = "item" + i;
+
+        if (settings[key] === false) {
+            item.style.display = "none";   
+        } else {
+            item.style.display = "block";  
+        }
+    }
+};
+
+document.addEventListener("DOMContentLoaded", function () {
+    let settings = JSON.parse(localStorage.getItem("menuSettings"));
+
+    if (!settings) return;
+
+    for (let i = 1; i <= 6; i++) {
+        let itemDiv = document.getElementById("glick-" + i);
+        let key = "item" + i;
+
+        if (settings[key] === false) {
+            itemDiv.style.display = "none";
+        } else {
+            itemDiv.style.display = "block";
+        }
+    }
+});
