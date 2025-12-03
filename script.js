@@ -250,3 +250,27 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 });
+
+let appliedCoupon = null;
+
+function applyCoupon() {
+    const entered = document.getElementById("couponInput").value.trim().toUpperCase();
+    const coupons = JSON.parse(localStorage.getItem("glickCoupons")) || [];
+
+    const match = coupons.find(c => c.code === entered);
+
+    if (!match) {
+        alert("Invalid coupon code.");
+        return;
+    }
+
+    appliedCoupon = match;
+    localStorage.setItem("appliedCoupon", JSON.stringify(match));
+
+    document.getElementById("discountText").textContent = 
+        `Coupon Applied: ${match.code} (${match.type === "percent" ? match.amount + "% off" : "$" + match.amount + " off"})`;
+
+    renderCart();
+}
+
+

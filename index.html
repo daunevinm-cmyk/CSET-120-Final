@@ -58,11 +58,33 @@ button:hover {
 }
 @media(max-width:900px){
     #header{flex-direction:column;height:auto;padding:15px;gap:10px;}#header-2{gap:15px;}#footer{text-align:center; justify-content:center; padding-left:0; display:flex; flex-direction:row; justify-content:space-between;}
-    }
+   }
+   /* light mode dark mode */
+   
+        body.dark-mode{
+            background-color: #121212;
+            color: #f0f0f0;
+        }
+        .theme-toggle-icon {
+            font-size: 28px;
+            cursor: pointer;
+            transition: transform 0.5s ease;
+            display: inline-block;
+        }
+        
+        .theme-toggle-icon:hover {
+            transform: scale(1.1);
+        }
+        body, #header, #footer, .menu-box {
+    transition: background-color 0.35s ease, color 0.35s ease;
+}
+
 </style>
 </head>
 <body>
 
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
 <div id="header">
     <div id="header-1">
@@ -76,6 +98,11 @@ button:hover {
         <a href="signup/signup.html">Sign up</a>
         <a href="login/login.html">Login</a>
     </div>
+    <div id="theme-toggle">
+    <ion-icon id="dark-toggle" class="theme-toggle-icon" name="moon"></ion-icon>
+    <ion-icon id="light-toggle" class="theme-toggle-icon" name="sunny" style="display:none;"></ion-icon>
+</div>
+
 </div>
 
 
@@ -86,6 +113,10 @@ button:hover {
     <p style="margin-left:15px;">Contact Us</p>
     <a href="manager.html" style="color: yellow; text-decoration: none; margin-left: 20px;">Manager Login</a>
 </div>
+
+
+
+    
 
 <script>
 let defaultMenu = [
@@ -129,7 +160,24 @@ function addToCart(name, price, image) {
 }
 
 document.addEventListener("DOMContentLoaded", loadMenu);
+// light mode dark mode
+const darkToggle = document.getElementById('dark-toggle');
+    const lightToggle = document.getElementById('light-toggle');
+
+    darkToggle.addEventListener('click', () => {
+      document.body.classList.add('dark-mode');
+      darkToggle.style.display = 'none';
+      lightToggle.style.display = 'inline-block';
+    });
+
+    lightToggle.addEventListener('click', () => {
+      document.body.classList.remove('dark-mode');
+      lightToggle.style.display = 'none';
+      darkToggle.style.display = 'inline-block';
+    });
+    
 </script>
+<script src="script.js"></script>
 
 </body>
 </html>
