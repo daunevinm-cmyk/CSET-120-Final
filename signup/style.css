@@ -6,20 +6,16 @@
     box-sizing: border-box;
     font-family: Arial, sans-serif;
 }
-
 body {
     background: #F2F0EF;
     color: #000;
 }
-
 .page-wrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-top: 40px;
 }
-
-
 .container {
     background: #CC2522;
     padding: 40px 50px;
@@ -30,18 +26,14 @@ body {
     display:flex;
     flex-direction:column;
 }
-
-
 h2 {
     margin-bottom: 25px;
 }
-
 .userinput {
     display: flex;
     flex-direction: column;
     gap: 15px;
 }
-
 .userinput input {
     padding: 12px;
     border-radius: 8px;
@@ -51,11 +43,9 @@ h2 {
     color: #fff;
     font-size: 14px;
 }
-
 .userinput input::placeholder {
     color: #fff;
 }
-
 button {
     padding: 12px;
     border: none;
@@ -66,7 +56,6 @@ button {
     cursor: pointer;
     transition: 0.1s;
 }
-
 button:hover {
     background: #ff2f2f;
 }
@@ -80,7 +69,6 @@ button:hover {
     max-width: 80%;
     margin: 0 auto;
 }
-
 button:active
 {
       background: #2beb44;
