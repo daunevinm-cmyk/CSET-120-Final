@@ -24,28 +24,20 @@
         background-color: brown;
         height: 75px;
         padding: 0 20px;
-        transition: background-color .35s ease, color .35s ease;
     }
 
     #header-1 h2 { color: yellow; margin: 0; font-size: 24px; }
 
-    #header-2 {
-        display: flex;
-        gap: 20px;
-        align-items: center;
-        font-size: 20px;
-    }
-
     #header-2 a {
         color: yellow;
         text-decoration: none;
+        margin-right: 15px;
     }
 
-   
     .theme-toggle-icon {
         font-size: 28px;
         cursor: pointer;
-        transition: transform 0.35s ease;
+        transition: transform 0.25s;
     }
     .theme-toggle-icon:hover { transform: scale(1.1); }
 
@@ -57,9 +49,7 @@
         margin-top: 40px;
     }
 
-    #logo-left {
-        width: 150px;
-    }
+    #logo-left { width: 150px; }
 
     .cart-container {
         display: flex;
@@ -76,15 +66,28 @@
         background-color: brown;
         color: yellow;
         width: 90%;
-        max-width: 600px;
+        max-width: 650px;
         padding: 10px 20px;
         border-radius: 10px;
-        transition: background-color .35s ease, color .35s ease;
+        flex-wrap: wrap;
+        gap: 10px;
     }
 
     .cart-item img {
         width: 100px;
         border-radius: 10px;
+    }
+
+    .topping-box {
+        display: flex;
+        flex-direction: column;
+        font-size: 12px;
+    }
+    .topping-box label {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        margin-bottom: 2px;
     }
 
     button {
@@ -96,10 +99,8 @@
         font-weight: bold;
         transition: transform 0.2s ease;
     }
-
     button:hover { transform: scale(1.05); }
 
-    
     #hidden-box {
         display: none;
         flex-direction: column;
@@ -111,9 +112,7 @@
         margin: 30px auto;
         padding: 20px;
         border-radius: 15px;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         gap: 10px;
-        transition: background-color .35s ease, color .35s ease;
     }
 
     #hidden-box input {
@@ -121,14 +120,8 @@
         padding: 10px;
         border-radius: 10px;
         border: none;
-        font-size: 14px;
     }
 
-    #hidden-box input:focus {
-        outline: 2px solid yellow;
-    }
-
-    
     #coupon-container {
         text-align: center;
         margin-top: 20px;
@@ -140,47 +133,21 @@
         margin-top: 10px;
     }
 
-  
-    body.dark-mode {
-        background-color: #121212;
-        color: #f0f0f0;
-    }
-
-    body.dark-mode h1 {
-        color: #ffcc00;
-    }
-
-    body.dark-mode #header {
-        background-color: #1e1e1e;
-        color: #fff;
-    }
-
-    body.dark-mode #header-2 a {
-        color: #ffcc00;
-    }
-
-    body.dark-mode .cart-item {
-        background-color: #222;
-        color: #ffcc00;
-    }
-
-    body.dark-mode #hidden-box {
-        background-color: #222;
-        color: #ffcc00;
-    }
-
-    body.dark-mode #discountText {
-        color: #ffcc00;
-    }
+    /* Dark mode */
+    body.dark-mode { background-color: #121212; color: #fff; }
+    body.dark-mode h1 { color: #ffcc00; }
+    body.dark-mode #header { background-color: #1e1e1e; }
+    body.dark-mode #header-2 a { color: #ffcc00; }
+    body.dark-mode .cart-item { background-color: #222; color: #ffcc00; }
+    body.dark-mode #hidden-box { background-color: #222; color: #ffcc00; }
+    body.dark-mode #discountText { color: #ffcc00; }
 </style>
 </head>
 
 <body>
 
-
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-
 
 <div id="header">
     <div id="header-1"><h2>Glickmate</h2></div>
@@ -196,7 +163,6 @@
     </div>
 </div>
 
-
 <div class="main-content">
     <img src="Images/tplogo.png" id="logo-left">
     <div>
@@ -207,14 +173,12 @@
     </div>
 </div>
 
-
 <div id="coupon-container">
     <input id="couponInput" type="text" placeholder="Enter Coupon Code"
            style="padding:10px;border-radius:10px;border:1px solid brown;">
     <button onclick="applyCoupon()">Apply Coupon</button>
     <p id="discountText"></p>
 </div>
-
 
 <div id="hidden-box">
     <input type="text" placeholder="Address" required>
@@ -228,11 +192,22 @@
     <button id="cash">Cash</button>
 </div>
 
-
 <script>
+/* -------------------- Toppings List -------------------- */
+const availableToppings = [
+    "Extra Cheese",
+    "Bacon",
+    "Onions",
+    "Tomatoes",
+    "Lettuce",
+    "Pickles",
+    "Jalapeños"
+];
+
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 let appliedCoupon = JSON.parse(localStorage.getItem('appliedCoupon')) || null;
 
+/* -------------------- Render Cart -------------------- */
 function renderCart() {
     const container = document.getElementById('cartContainer');
     container.innerHTML = '';
@@ -244,35 +219,73 @@ function renderCart() {
     }
 
     cart.forEach((item, index) => {
+        if (!item.toppings) item.toppings = [];
+
         const div = document.createElement('div');
         div.classList.add('cart-item');
+
+        const toppingsHTML = availableToppings
+            .map(t => `
+                <label>
+                    <input type="checkbox"
+                           ${item.toppings.includes(t) ? "checked" : ""}
+                           onchange="updateToppings(${index}, '${t}', this.checked)">
+                    ${t}
+                </label>
+            `)
+            .join('');
+
         div.innerHTML = `
             <img src="${item.image}">
             <p>${item.name}</p>
             <p>$${item.price.toFixed(2)}</p>
-            <input type="number" min="1" value="${item.quantity}" 
+
+            <div class="topping-box">
+                <strong>Toppings:</strong>
+                ${toppingsHTML}
+            </div>
+
+            <input type="number" min="1" value="${item.quantity}"
                    style="width:60px;padding:5px;border-radius:5px;"
                    onchange="updateQuantity(${index}, this.value)">
+
             <button onclick="removeItem(${index})">Remove</button>
         `;
+
         container.appendChild(div);
     });
 
     updateTotal();
 }
 
+/* -------------------- Update Quantity -------------------- */
 function updateQuantity(index, qty) {
     cart[index].quantity = Math.max(1, parseInt(qty));
     localStorage.setItem('cart', JSON.stringify(cart));
     renderCart();
 }
 
+/* -------------------- Update Toppings (Checkbox) -------------------- */
+function updateToppings(index, topping, isChecked) {
+    if (isChecked) {
+        if (!cart[index].toppings.includes(topping)) {
+            cart[index].toppings.push(topping);
+        }
+    } else {
+        cart[index].toppings = cart[index].toppings.filter(t => t !== topping);
+    }
+
+    localStorage.setItem('cart', JSON.stringify(cart));
+}
+
+/* -------------------- Remove Item -------------------- */
 function removeItem(index) {
     cart.splice(index, 1);
     localStorage.setItem('cart', JSON.stringify(cart));
     renderCart();
 }
 
+/* -------------------- Calculate Total -------------------- */
 function calculateTotal() {
     let total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
@@ -292,6 +305,7 @@ function updateTotal() {
     document.getElementById('totalDiv').textContent = `Total: $${calculateTotal()}`;
 }
 
+/* -------------------- Coupon -------------------- */
 function applyCoupon() {
     const code = document.getElementById('couponInput').value.trim().toUpperCase();
     const coupons = JSON.parse(localStorage.getItem('glickCoupons')) || [];
@@ -301,13 +315,12 @@ function applyCoupon() {
 
     appliedCoupon = match;
     localStorage.setItem('appliedCoupon', JSON.stringify(appliedCoupon));
-
-    document.getElementById('discountText').textContent =
-        `Coupon Applied: ${appliedCoupon.code}`;
+    document.getElementById('discountText').textContent = `Coupon Applied: ${appliedCoupon.code}`;
 
     updateTotal();
 }
 
+/* -------------------- Purchase -------------------- */
 function showPurchaseAlert(method) {
     if (cart.length === 0) return alert("Your cart is empty.");
 
@@ -317,7 +330,16 @@ function showPurchaseAlert(method) {
     cart.forEach(item => {
         const itemTotal = item.price * item.quantity;
         total += itemTotal;
-        msg += `${item.name} — Qty: ${item.quantity} — $${item.price.toFixed(2)} each\nSubtotal: $${itemTotal.toFixed(2)}\n\n`;
+
+        msg += `${item.name} — Qty: ${item.quantity}\n`;
+        msg += `Price: $${item.price.toFixed(2)} each\n`;
+        msg += `Subtotal: $${itemTotal.toFixed(2)}\n`;
+
+        if (item.toppings.length > 0) {
+            msg += `Toppings: ${item.toppings.join(", ")}\n`;
+        }
+
+        msg += "\n";
     });
 
     if (appliedCoupon) {
@@ -335,15 +357,16 @@ function showPurchaseAlert(method) {
     alert(msg);
 
     cart = [];
+    appliedCoupon = null;
     localStorage.removeItem('cart');
     localStorage.removeItem('appliedCoupon');
-    appliedCoupon = null;
-
     renderCart();
+
     document.getElementById('discountText').textContent = '';
     document.getElementById('hidden-box').style.display = 'none';
 }
 
+/* -------------------- Payment Buttons -------------------- */
 document.getElementById('cash').addEventListener('click',
     () => showPurchaseAlert("Cash"));
 
@@ -360,7 +383,7 @@ document.querySelector('#hidden-box button[type="submit"]').addEventListener('cl
     showPurchaseAlert("Card");
 });
 
-// Dark mode toggle
+/* -------------------- Dark Mode -------------------- */
 const darkToggle = document.getElementById('dark-toggle');
 const lightToggle = document.getElementById('light-toggle');
 
