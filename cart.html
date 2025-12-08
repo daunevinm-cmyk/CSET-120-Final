@@ -61,21 +61,27 @@
 
     .cart-item {
         display: flex;
-        justify-content: space-between;
-        align-items: center;
+        align-items: flex-start;
         background-color: brown;
         color: yellow;
         width: 90%;
         max-width: 650px;
         padding: 10px 20px;
         border-radius: 10px;
-        flex-wrap: wrap;
-        gap: 10px;
+        gap: 15px;
     }
 
     .cart-item img {
         width: 100px;
         border-radius: 10px;
+        flex-shrink: 0;
+    }
+
+    .cart-item .item-details {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        flex-grow: 1;
     }
 
     .topping-box {
@@ -193,7 +199,6 @@
 </div>
 
 <script>
-/* -------------------- Toppings List -------------------- */
 const availableToppings = [
     "Extra Cheese",
     "Bacon",
@@ -207,7 +212,6 @@ const availableToppings = [
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 let appliedCoupon = JSON.parse(localStorage.getItem('appliedCoupon')) || null;
 
-/* -------------------- Render Cart -------------------- */
 function renderCart() {
     const container = document.getElementById('cartContainer');
     container.innerHTML = '';
@@ -232,24 +236,22 @@ function renderCart() {
                            onchange="updateToppings(${index}, '${t}', this.checked)">
                     ${t}
                 </label>
-            `)
-            .join('');
+            `).join('');
 
         div.innerHTML = `
             <img src="${item.image}">
-            <p>${item.name}</p>
-            <p>$${item.price.toFixed(2)}</p>
-
-            <div class="topping-box">
-                <strong>Toppings:</strong>
-                ${toppingsHTML}
+            <div class="item-details">
+                <p>${item.name}</p>
+                <p>$${item.price.toFixed(2)}</p>
+                <div class="topping-box">
+                    <strong>Toppings:</strong>
+                    ${toppingsHTML}
+                </div>
+                <input type="number" min="1" value="${item.quantity}"
+                       style="width:60px;padding:5px;border-radius:5px;"
+                       onchange="updateQuantity(${index}, this.value)">
+                <button onclick="removeItem(${index})">Remove</button>
             </div>
-
-            <input type="number" min="1" value="${item.quantity}"
-                   style="width:60px;padding:5px;border-radius:5px;"
-                   onchange="updateQuantity(${index}, this.value)">
-
-            <button onclick="removeItem(${index})">Remove</button>
         `;
 
         container.appendChild(div);
@@ -258,14 +260,12 @@ function renderCart() {
     updateTotal();
 }
 
-/* -------------------- Update Quantity -------------------- */
 function updateQuantity(index, qty) {
     cart[index].quantity = Math.max(1, parseInt(qty));
     localStorage.setItem('cart', JSON.stringify(cart));
     renderCart();
 }
 
-/* -------------------- Update Toppings (Checkbox) -------------------- */
 function updateToppings(index, topping, isChecked) {
     if (isChecked) {
         if (!cart[index].toppings.includes(topping)) {
@@ -274,30 +274,24 @@ function updateToppings(index, topping, isChecked) {
     } else {
         cart[index].toppings = cart[index].toppings.filter(t => t !== topping);
     }
-
     localStorage.setItem('cart', JSON.stringify(cart));
 }
 
-/* -------------------- Remove Item -------------------- */
 function removeItem(index) {
     cart.splice(index, 1);
     localStorage.setItem('cart', JSON.stringify(cart));
     renderCart();
 }
 
-/* -------------------- Calculate Total -------------------- */
 function calculateTotal() {
     let total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-
     if (appliedCoupon) {
         if (appliedCoupon.type === "percent")
             total *= (1 - appliedCoupon.amount / 100);
         else
             total -= appliedCoupon.amount;
-
         if (total < 0) total = 0;
     }
-
     return total.toFixed(2);
 }
 
@@ -305,55 +299,38 @@ function updateTotal() {
     document.getElementById('totalDiv').textContent = `Total: $${calculateTotal()}`;
 }
 
-/* -------------------- Coupon -------------------- */
 function applyCoupon() {
     const code = document.getElementById('couponInput').value.trim().toUpperCase();
     const coupons = JSON.parse(localStorage.getItem('glickCoupons')) || [];
     const match = coupons.find(c => c.code === code);
-
     if (!match) return alert("Invalid coupon code.");
-
     appliedCoupon = match;
     localStorage.setItem('appliedCoupon', JSON.stringify(appliedCoupon));
     document.getElementById('discountText').textContent = `Coupon Applied: ${appliedCoupon.code}`;
-
     updateTotal();
 }
 
-/* -------------------- Purchase -------------------- */
 function showPurchaseAlert(method) {
     if (cart.length === 0) return alert("Your cart is empty.");
-
     let msg = "Thank you for your purchase!\n---------------------------------\nItems Purchased:\n\n";
     let total = 0;
-
     cart.forEach(item => {
         const itemTotal = item.price * item.quantity;
         total += itemTotal;
-
         msg += `${item.name} — Qty: ${item.quantity}\n`;
         msg += `Price: $${item.price.toFixed(2)} each\n`;
         msg += `Subtotal: $${itemTotal.toFixed(2)}\n`;
-
-        if (item.toppings.length > 0) {
-            msg += `Toppings: ${item.toppings.join(", ")}\n`;
-        }
-
+        if (item.toppings.length > 0) msg += `Toppings: ${item.toppings.join(", ")}\n`;
         msg += "\n";
     });
-
     if (appliedCoupon) {
-        if (appliedCoupon.type === "percent")
-            total *= (1 - appliedCoupon.amount / 100);
-        else
-            total -= appliedCoupon.amount;
+        if (appliedCoupon.type === "percent") total *= (1 - appliedCoupon.amount / 100);
+        else total -= appliedCoupon.amount;
     }
-
     msg += "---------------------------------\n";
     msg += `Total: $${total.toFixed(2)}\n`;
     msg += `Payment Method: ${method}\n`;
     msg += "---------------------------------";
-
     alert(msg);
 
     cart = [];
@@ -361,14 +338,11 @@ function showPurchaseAlert(method) {
     localStorage.removeItem('cart');
     localStorage.removeItem('appliedCoupon');
     renderCart();
-
     document.getElementById('discountText').textContent = '';
     document.getElementById('hidden-box').style.display = 'none';
 }
 
-/* -------------------- Payment Buttons -------------------- */
-document.getElementById('cash').addEventListener('click',
-    () => showPurchaseAlert("Cash"));
+document.getElementById('cash').addEventListener('click', () => showPurchaseAlert("Cash"));
 
 document.getElementById('purchase').addEventListener('click', () => {
     const box = document.getElementById('hidden-box');
@@ -383,7 +357,6 @@ document.querySelector('#hidden-box button[type="submit"]').addEventListener('cl
     showPurchaseAlert("Card");
 });
 
-/* -------------------- Dark Mode -------------------- */
 const darkToggle = document.getElementById('dark-toggle');
 const lightToggle = document.getElementById('light-toggle');
 

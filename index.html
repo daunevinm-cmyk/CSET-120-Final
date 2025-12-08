@@ -66,29 +66,25 @@ body {
     color: #fff;
 }
 
-
 #menu-container {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); 
+    grid-template-columns: repeat(3, 1fr);
     gap: 40px;
     padding: 40px;
     justify-items: center;
 }
 
-/* Tablet */
 @media (max-width: 1100px) {
     #menu-container {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
-/* Mobile */
 @media (max-width: 700px) {
     #menu-container {
         grid-template-columns: 1fr;
     }
 }
-
 
 .menu-box {
     background-color: brown;
@@ -248,19 +244,37 @@ function loadMenu() {
             <img src="${item.image}">
             <h3>${item.name}</h3>
             <p>$${item.price.toFixed(2)}</p>
-            <button onclick="addToCart('${item.name}', ${item.price})">Add To Cart</button>
+            <button onclick="addToCart('${item.name}', ${item.price}, '${item.image}')">
+                Add To Cart
+            </button>
         `;
         container.appendChild(box);
     });
 }
 
-function addToCart(name, price) {
-    alert(`${name} added to cart for $${price.toFixed(2)}`);
+function addToCart(name, price, image) {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    const existingItem = cart.find(item => item.name === name);
+
+    if (existingItem) {
+        existingItem.quantity += 1;
+    } else {
+        cart.push({
+            name: name,
+            price: price,
+            quantity: 1,
+            image: image   // <-- Store image in cart!
+        });
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+    alert(`${name} added to cart`);
 }
 
 document.addEventListener("DOMContentLoaded", loadMenu);
 
-// Dark mode toggle
+/* Dark mode toggle */
 const darkToggle = document.getElementById('dark-toggle');
 const lightToggle = document.getElementById('light-toggle');
 
