@@ -8,103 +8,193 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
-
 * {
-    margin:0; box-sizing:border-box; font-family:'Montserrat', sans-serif;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
 }
+
 body {
-    background-color:#F2F0EF; color:#333;
+    background-color: #F2F0EF;
+    color: #333;
 }
+
+/* ===== HEADER ===== */
 #header {
-    display:flex; justify-content:space-between; align-items:center; background-color:brown; padding:0 30px; height:85px; box-shadow:0 4px 8px rgba(0,0,0,0.2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: brown;
+    padding: 0 30px;
+    height: 85px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
 #header-1 {
-    display:flex; align-items:center;
+    display: flex;
+    align-items: center;
 }
 
 #header-1 h2 {
-    color:#FFD84D; font-size:28px; font-weight:700;
+    color: #FFD84D;
+    font-size: 28px;
+    font-weight: 700;
 }
 
 #header-1 img {
-    width:55px; height:55px; margin-left:10px;
+    width: 55px;
+    height: 55px;
+    margin-left: 10px;
 }
 
 #header-2 {
-    display:flex; gap:25px; font-size:18px;
+    display: flex;
+    gap: 25px;
+    font-size: 18px;
 }
 
-#header-2 a, #header-2 p {
-    color:#FFD84D; text-decoration:none; cursor:pointer; transition:0.2s ease;
+#header-2 a,
+#header-2 p {
+    color: #FFD84D;
+    text-decoration: none;
+    cursor: pointer;
+    transition: 0.2s ease;
 }
 
-#header-2 a:hover, #header-2 p:hover {
-    color:#fff;
+#header-2 a:hover,
+#header-2 p:hover {
+    color: #fff;
 }
 
+/* ===== MENU GRID (3 PER ROW) ===== */
 #menu-container {
-    display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:40px; padding:40px; justify-items:center;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* ✅ 3 per row */
+    gap: 40px;
+    padding: 40px;
+    justify-items: center;
 }
 
+/* Tablet */
+@media (max-width: 1100px) {
+    #menu-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+    #menu-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ===== MENU BOX ===== */
 .menu-box {
-    background-color:brown; color:#FFD84D; width:320px; padding:15px; border-radius:18px; text-align:center; box-shadow:0 6px 15px rgba(0,0,0,0.2); transition:transform 0.2s ease, box-shadow 0.25s ease;
+    background-color: brown;
+    color: #FFD84D;
+    width: 320px;
+    padding: 15px;
+    border-radius: 18px;
+    text-align: center;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+    transition: transform 0.2s ease, box-shadow 0.25s ease;
 }
 
 .menu-box:hover {
-    transform:translateY(-6px); box-shadow:0 10px 20px rgba(0,0,0,0.28);
+    transform: translateY(-6px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.28);
 }
 
 .menu-box img {
-    width:280px; height:180px; object-fit:cover; border-radius:10px;
+    width: 280px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 10px;
 }
 
 button {
-    margin-top:10px; background-color:#FFD84D; color:brown; border:none; padding:10px 18px; border-radius:25px; cursor:pointer; font-size:14px; font-weight:600; transition:0.2s ease;
+    margin-top: 10px;
+    background-color: #FFD84D;
+    color: brown;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: 0.2s ease;
 }
 
 button:hover {
-    background-color:#FFE892; transform:scale(1.05);
+    background-color: #FFE892;
+    transform: scale(1.05);
 }
 
+/* ===== FOOTER ===== */
 #footer {
-    position:fixed; bottom:0; left:0; background-color:brown; width:100%; height:85px; color:#FFD84D; display:flex; align-items:center; padding-left:20px; font-size:18px; box-shadow:0 -4px 8px rgba(0,0,0,0.2);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    background-color: brown;
+    width: 100%;
+    height: 85px;
+    color: #FFD84D;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+    font-size: 18px;
+    box-shadow: 0 -4px 8px rgba(0,0,0,0.2);
 }
 
-@media(max-width:900px){
-    #header{flex-direction:column;height:auto;padding:15px;gap:10px;}#header-2{gap:15px;}#footer{text-align:center; justify-content:center; padding-left:0; display:flex; flex-direction:row; justify-content:space-between;}
-   }
-   
-   
-        body.dark-mode{
-            background-color: #121212;
-            color: #f0f0f0;
-        }
-        .theme-toggle-icon {
-            font-size: 28px;
-            cursor: pointer;
-            transition: transform 0.5s ease;
-            display: inline-block;
-        }
-        
-        .theme-toggle-icon:hover {
-            transform: scale(1.1);
-        }
-        body, #header, #footer, .menu-box {
+/* ===== DARK MODE ===== */
+body.dark-mode {
+    background-color: #121212;
+    color: #f0f0f0;
+}
+
+.theme-toggle-icon {
+    font-size: 28px;
+    cursor: pointer;
+    transition: transform 0.5s ease;
+}
+
+.theme-toggle-icon:hover {
+    transform: scale(1.1);
+}
+
+body, #header, #footer, .menu-box {
     transition: background-color 0.35s ease, color 0.35s ease;
 }
 
+@media (max-width: 900px) {
+    #header {
+        flex-direction: column;
+        height: auto;
+        padding: 15px;
+        gap: 10px;
+    }
 
+    #header-2 {
+        gap: 15px;
+    }
+
+    #footer {
+        justify-content: space-between;
+        padding: 0 15px;
+    }
+}
 </style>
 </head>
+
 <body>
 
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
 <div id="header">
     <div id="header-1">
-        <h2 style="color: yellow">Glickmate</h2>
+        <h2>Glickmate</h2>
         <img src="Images/tplogo.png">
     </div>
 
@@ -114,25 +204,21 @@ button:hover {
         <a href="signup/signup.html">Sign up</a>
         <a href="login/login.html">Login</a>
     </div>
+
     <div id="theme-toggle">
-    <ion-icon id="dark-toggle" class="theme-toggle-icon" name="moon"></ion-icon>
-    <ion-icon id="light-toggle" class="theme-toggle-icon" name="sunny" style="display:none;"></ion-icon>
+        <ion-icon id="dark-toggle" class="theme-toggle-icon" name="moon"></ion-icon>
+        <ion-icon id="light-toggle" class="theme-toggle-icon" name="sunny" style="display:none;"></ion-icon>
+    </div>
 </div>
-
-</div>
-
 
 <div id="menu-container"></div>
 
-
 <div id="footer">
     <p style="margin-left:15px;">Contact Us</p>
-    <a href="manager.html" style="color: yellow; text-decoration: none; margin-left: 20px;">Manager Login</a>
+    <a href="manager.html" style="color: yellow; text-decoration: none; margin-left: 20px;">
+        Manager Login
+    </a>
 </div>
-
-
-
-    
 
 <script>
 let defaultMenu = [
@@ -144,8 +230,7 @@ let defaultMenu = [
     { name: "Chicago", price: 7.00, image: "Images/chicago.png", enabled: true }
 ];
 
-
-if(!localStorage.getItem("glickMenu")) {
+if (!localStorage.getItem("glickMenu")) {
     localStorage.setItem("glickMenu", JSON.stringify(defaultMenu));
 }
 
@@ -154,46 +239,43 @@ function loadMenu() {
     const container = document.getElementById("menu-container");
     container.innerHTML = "";
 
-    menu.forEach((item, index) => {
-        if(!item.enabled) return; 
+    menu.forEach(item => {
+        if (!item.enabled) return;
 
         const box = document.createElement("div");
         box.className = "menu-box";
-
         box.innerHTML = `
             <img src="${item.image}">
             <h3>${item.name}</h3>
-            <p>$${Number(item.price).toFixed(2)}</p>
-            <button onclick="addToCart('${item.name}', ${item.price}, '${item.image}')">Add To Cart</button>
+            <p>$${item.price.toFixed(2)}</p>
+            <button onclick="addToCart('${item.name}', ${item.price})">Add To Cart</button>
         `;
-
         container.appendChild(box);
     });
 }
 
-function addToCart(name, price, image) {
+function addToCart(name, price) {
     alert(`${name} added to cart for $${price.toFixed(2)}`);
 }
 
 document.addEventListener("DOMContentLoaded", loadMenu);
 
+// Dark mode toggle
 const darkToggle = document.getElementById('dark-toggle');
-    const lightToggle = document.getElementById('light-toggle');
+const lightToggle = document.getElementById('light-toggle');
 
-    darkToggle.addEventListener('click', () => {
-      document.body.classList.add('dark-mode');
-      darkToggle.style.display = 'none';
-      lightToggle.style.display = 'inline-block';
-    });
+darkToggle.addEventListener('click', () => {
+    document.body.classList.add('dark-mode');
+    darkToggle.style.display = 'none';
+    lightToggle.style.display = 'inline-block';
+});
 
-    lightToggle.addEventListener('click', () => {
-      document.body.classList.remove('dark-mode');
-      lightToggle.style.display = 'none';
-      darkToggle.style.display = 'inline-block';
-    });
-    
+lightToggle.addEventListener('click', () => {
+    document.body.classList.remove('dark-mode');
+    lightToggle.style.display = 'none';
+    darkToggle.style.display = 'inline-block';
+});
 </script>
-<script src="script.js"></script>
 
 </body>
 </html>
