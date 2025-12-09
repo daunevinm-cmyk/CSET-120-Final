@@ -88,13 +88,13 @@
     <h3 style="text-align:center;color:brown;">Add New Menu Item</h3>
 
     <label>Item Name</label>
-    <input type="text" id="newName" placeholder="Example: Bacon Dog">
+    <input type="text" id="newName">
 
     <label>Price ($)</label>
-    <input type="number" id="newPrice" step="0.01" placeholder="Example: 6.50">
+    <input type="number" id="newPrice" step="0.01">
 
     <label>Image URL</label>
-    <input type="text" id="newImage" placeholder="Images/bacon.png">
+    <input type="text" id="newImage">
 
     <label>
         <input type="checkbox" id="newEnabled" checked> Enabled
@@ -103,11 +103,36 @@
     <button onclick="addItem()">Add Item</button>
 </div>
 
+<!-- COUPON SECTION -->
+<div class="menu-card">
+    <h3 style="text-align:center;color:brown;">Create Coupon</h3>
+
+    <label>Coupon Code</label>
+    <input type="text" id="couponCode" placeholder="SAVE10">
+
+    <label>Discount Type</label>
+    <select id="couponType">
+        <option value="percent">Percent (%)</option>
+        <option value="fixed">Fixed ($)</option>
+    </select>
+
+    <label>Discount Amount</label>
+    <input type="number" id="couponValue" step="0.01">
+
+    <label>
+        <input type="checkbox" id="couponEnabled" checked> Enabled
+    </label>
+
+    <button onclick="addCoupon()">Add Coupon</button>
+</div>
+
+<div id="coupon-list"></div>
 <div id="menu-edit-container"></div>
 
-<button onclick="saveMenu()">Save Changes</button>
+<button onclick="saveAll()">Save Changes</button>
 
 <script>
+// ---------------- MENU ----------------
 const defaultMenu = [
     { name: "Plain", price: 5.00, image: "Images/plain.png", enabled: true },
     { name: "Loaded", price: 7.00, image: "Images/loaded.png", enabled: true },
@@ -116,83 +141,122 @@ const defaultMenu = [
 
 let menu = JSON.parse(localStorage.getItem("glickMenu")) || defaultMenu;
 
+// ---------------- COUPONS ----------------
+let coupons = JSON.parse(localStorage.getItem("glickCoupons")) || [];
+
 function buildEditor() {
     const container = document.getElementById("menu-edit-container");
     container.innerHTML = "";
 
-    menu.forEach((item, index) => {
+    menu.forEach((item, i) => {
         const card = document.createElement("div");
         card.className = "menu-card";
 
         card.innerHTML = `
             <div class="toggle-row">
                 <label>${item.name}</label>
-                <input type="checkbox" id="enable-${index}" ${item.enabled ? "checked" : ""}>
+                <input type="checkbox" id="enable-${i}" ${item.enabled ? "checked" : ""}>
             </div>
 
-            <label>Item Name</label>
-            <input type="text" id="name-${index}" value="${item.name}">
+            <label>Name</label>
+            <input type="text" id="name-${i}" value="${item.name}">
 
             <label>Price ($)</label>
-            <input type="number" id="price-${index}" value="${item.price}" step="0.01">
+            <input type="number" step="0.01" id="price-${i}" value="${item.price}">
 
-            <label>Image URL</label>
-            <input type="text" id="img-${index}" value="${item.image}">
+            <label>Image</label>
+            <input type="text" id="img-${i}" value="${item.image}">
 
-            <button class="delete-btn" onclick="removeItem(${index})">Delete Item</button>
+            <button class="delete-btn" onclick="removeItem(${i})">Delete Item</button>
         `;
-
         container.appendChild(card);
     });
 }
 
 function addItem() {
-    const name = document.getElementById("newName").value.trim();
-    const price = parseFloat(document.getElementById("newPrice").value);
-    const image = document.getElementById("newImage").value.trim();
-    const enabled = document.getElementById("newEnabled").checked;
+    const name = newName.value.trim();
+    const price = parseFloat(newPrice.value);
+    const image = newImage.value.trim();
+    const enabled = newEnabled.checked;
 
-    if (!name || isNaN(price) || !image) {
-        alert("Please fill out all fields.");
-        return;
-    }
+    if (!name || isNaN(price) || !image) return alert("Fill out all fields");
 
-    menu.push({
-        name,
-        price,
-        image,
-        enabled
-    });
-
-    document.getElementById("newName").value = "";
-    document.getElementById("newPrice").value = "";
-    document.getElementById("newImage").value = "";
-    document.getElementById("newEnabled").checked = true;
-
+    menu.push({ name, price, image, enabled });
+    newName.value = newPrice.value = newImage.value = "";
+    newEnabled.checked = true;
     buildEditor();
 }
 
-function removeItem(index) {
-    if (confirm("Delete this item?")) {
-        menu.splice(index, 1);
+function removeItem(i) {
+    if (confirm("Delete item?")) {
+        menu.splice(i, 1);
         buildEditor();
     }
 }
 
-function saveMenu() {
-    menu.forEach((item, index) => {
-        item.enabled = document.getElementById(`enable-${index}`).checked;
-        item.name = document.getElementById(`name-${index}`).value;
-        item.price = parseFloat(document.getElementById(`price-${index}`).value);
-        item.image = document.getElementById(`img-${index}`).value;
+// ---------------- COUPON FUNCTIONS ----------------
+function addCoupon() {
+    const code = couponCode.value.trim().toUpperCase();
+    const type = couponType.value;
+    const value = parseFloat(couponValue.value);
+    const enabled = couponEnabled.checked;
+
+    if (!code || isNaN(value)) return alert("Invalid coupon");
+
+    coupons.push({ code, type, value, enabled });
+    couponCode.value = couponValue.value = "";
+    couponEnabled.checked = true;
+    renderCoupons();
+}
+
+function renderCoupons() {
+    const container = document.getElementById("coupon-list");
+    container.innerHTML = "";
+
+    coupons.forEach((c, i) => {
+        const card = document.createElement("div");
+        card.className = "menu-card";
+        card.innerHTML = `
+            <div class="toggle-row">
+                <strong>${c.code}</strong>
+                <input type="checkbox" id="c-enable-${i}" ${c.enabled ? "checked" : ""}>
+            </div>
+            <p>${c.type === "percent" ? c.value + "%" : "$" + c.value} off</p>
+            <button class="delete-btn" onclick="deleteCoupon(${i})">Delete Coupon</button>
+        `;
+        container.appendChild(card);
+    });
+}
+
+function deleteCoupon(i) {
+    if (confirm("Delete coupon?")) {
+        coupons.splice(i, 1);
+        renderCoupons();
+    }
+}
+
+// ---------------- SAVE ----------------
+function saveAll() {
+    menu.forEach((item, i) => {
+        item.enabled = document.getElementById(`enable-${i}`).checked;
+        item.name = document.getElementById(`name-${i}`).value;
+        item.price = parseFloat(document.getElementById(`price-${i}`).value);
+        item.image = document.getElementById(`img-${i}`).value;
+    });
+
+    coupons.forEach((c, i) => {
+        c.enabled = document.getElementById(`c-enable-${i}`).checked;
     });
 
     localStorage.setItem("glickMenu", JSON.stringify(menu));
-    alert("Menu Updated!");
+    localStorage.setItem("glickCoupons", JSON.stringify(coupons));
+
+    alert("Menu & Coupons Saved!");
     window.location.href = "index.html";
 }
 
 buildEditor();
+renderCoupons();
 </script>
 
 </body>
