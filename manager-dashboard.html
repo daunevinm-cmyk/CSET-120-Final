@@ -4,6 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Manager Menu Controls</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
@@ -25,7 +26,7 @@
         border-radius: 16px;
         padding: 18px;
         margin: 15px auto;
-        width: 400px;
+        width: 420px;
         box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     }
 
@@ -34,8 +35,7 @@
         color: brown;
     }
 
-    input[type="text"],
-    input[type="number"] {
+    input, select {
         width: 100%;
         padding: 8px;
         margin: 6px 0 12px 0;
@@ -51,7 +51,7 @@
 
     button {
         display: block;
-        margin: 30px auto;
+        margin: 20px auto;
         padding: 14px 30px;
         background: #FFD84D;
         color: brown;
@@ -66,6 +66,16 @@
         background: #FFE892;
         transform: scale(1.05);
     }
+
+    .delete-btn {
+        background: #e74c3c;
+        color: white;
+        margin-top: 10px;
+    }
+
+    .delete-btn:hover {
+        background: #ff6b5c;
+    }
 </style>
 </head>
 
@@ -73,26 +83,27 @@
 
 <h1>Manager Menu Controls</h1>
 
-<div id="menu-edit-container"></div>
-
+<!-- ADD NEW ITEM -->
 <div class="menu-card">
-    <h3 style="text-align:center;color:brown;">Create a Coupon Code</h3>
+    <h3 style="text-align:center;color:brown;">Add New Menu Item</h3>
 
-    <label>Coupon Code:</label>
-    <input type="text" id="couponCode" placeholder="Example: SAVE10">
+    <label>Item Name</label>
+    <input type="text" id="newName" placeholder="Example: Bacon Dog">
 
-    <label>Discount Amount:</label>
-    <input type="number" id="couponAmount" placeholder="Example: 10">
+    <label>Price ($)</label>
+    <input type="number" id="newPrice" step="0.01" placeholder="Example: 6.50">
 
-    <label>Discount Type:</label>
-    <select id="couponType" style="width:100%;padding:8px;border-radius:6px;border:1px solid #aaa;">
-        <option value="percent">Percentage (%)</option>
-        <option value="flat">Flat Amount ($)</option>
-    </select>
+    <label>Image URL</label>
+    <input type="text" id="newImage" placeholder="Images/bacon.png">
 
-    <button onclick="saveCoupon()">Add Coupon</button>
+    <label>
+        <input type="checkbox" id="newEnabled" checked> Enabled
+    </label>
+
+    <button onclick="addItem()">Add Item</button>
 </div>
 
+<div id="menu-edit-container"></div>
 
 <button onclick="saveMenu()">Save Changes</button>
 
@@ -100,10 +111,7 @@
 const defaultMenu = [
     { name: "Plain", price: 5.00, image: "Images/plain.png", enabled: true },
     { name: "Loaded", price: 7.00, image: "Images/loaded.png", enabled: true },
-    { name: "Cheese", price: 6.00, image: "Images/cheese.png", enabled: true },
-    { name: "Nacho", price: 7.00, image: "Images/nacho.png", enabled: true },
-    { name: "Chili", price: 6.00, image: "Images/chili.png", enabled: true },
-    { name: "Chicago", price: 7.00, image: "Images/chicago.png", enabled: true }
+    { name: "Cheese", price: 6.00, image: "Images/cheese.png", enabled: true }
 ];
 
 let menu = JSON.parse(localStorage.getItem("glickMenu")) || defaultMenu;
@@ -113,7 +121,6 @@ function buildEditor() {
     container.innerHTML = "";
 
     menu.forEach((item, index) => {
-
         const card = document.createElement("div");
         card.className = "menu-card";
 
@@ -123,18 +130,53 @@ function buildEditor() {
                 <input type="checkbox" id="enable-${index}" ${item.enabled ? "checked" : ""}>
             </div>
 
-            <label>Item Name:</label>
+            <label>Item Name</label>
             <input type="text" id="name-${index}" value="${item.name}">
 
-            <label>Price ($):</label>
+            <label>Price ($)</label>
             <input type="number" id="price-${index}" value="${item.price}" step="0.01">
 
-            <label>Image URL:</label>
+            <label>Image URL</label>
             <input type="text" id="img-${index}" value="${item.image}">
+
+            <button class="delete-btn" onclick="removeItem(${index})">Delete Item</button>
         `;
 
         container.appendChild(card);
     });
+}
+
+function addItem() {
+    const name = document.getElementById("newName").value.trim();
+    const price = parseFloat(document.getElementById("newPrice").value);
+    const image = document.getElementById("newImage").value.trim();
+    const enabled = document.getElementById("newEnabled").checked;
+
+    if (!name || isNaN(price) || !image) {
+        alert("Please fill out all fields.");
+        return;
+    }
+
+    menu.push({
+        name,
+        price,
+        image,
+        enabled
+    });
+
+    document.getElementById("newName").value = "";
+    document.getElementById("newPrice").value = "";
+    document.getElementById("newImage").value = "";
+    document.getElementById("newEnabled").checked = true;
+
+    buildEditor();
+}
+
+function removeItem(index) {
+    if (confirm("Delete this item?")) {
+        menu.splice(index, 1);
+        buildEditor();
+    }
 }
 
 function saveMenu() {
@@ -146,39 +188,9 @@ function saveMenu() {
     });
 
     localStorage.setItem("glickMenu", JSON.stringify(menu));
-
     alert("Menu Updated!");
-
     window.location.href = "index.html";
 }
-
-function saveCoupon() {
-    const code = document.getElementById("couponCode").value.trim();
-    const amount = parseFloat(document.getElementById("couponAmount").value);
-    const type = document.getElementById("couponType").value;
-
-    if (!code || isNaN(amount)) {
-        alert("Enter a valid coupon and amount.");
-        return;
-    }
-
-    let coupons = JSON.parse(localStorage.getItem("glickCoupons")) || [];
-
-    coupons.push({
-        code: code.toUpperCase(),
-        amount: amount,
-        type: type
-    });
-
-    localStorage.setItem("glickCoupons", JSON.stringify(coupons));
-
-    alert("Coupon Saved!");
-    
-    document.getElementById("couponCode").value = "";
-    document.getElementById("couponAmount").value = "";
-}
-
-
 
 buildEditor();
 </script>
